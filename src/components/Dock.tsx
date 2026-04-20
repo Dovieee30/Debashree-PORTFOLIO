@@ -47,7 +47,7 @@ export default function Dock({ activePanel, onIconClick, visible }: DockProps & 
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {DOCK_ICONS.map((item, index) => (
+      {DOCK_ICONS.map((item) => (
         <div key={item.id} style={{ display: 'contents' }}>
           {/* Separator before contact */}
           {item.id === 'contact' && <div className="dock-separator" />}

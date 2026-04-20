@@ -155,7 +155,7 @@ export default function Robot({ onReady }: { onReady: () => void }) {
     const tTypewriter = setTimeout(() => {
       if (heroTextRef.current) heroTextRef.current.style.opacity = '1';
 
-      const fullName = 'D E B A S H R E E          M A L';
+      const fullName = 'D E B A S H R E E M A L';
       let idx = 0;
       typeInterval = setInterval(() => {
         if (idx < fullName.length) {
