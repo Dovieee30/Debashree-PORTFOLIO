@@ -1,69 +1,189 @@
-import { useRef } from 'react';
+'use client';
+
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'motion/react';
+import type { SpringOptions, MotionValue } from 'motion/react';
+import React, { Children, cloneElement, useEffect, useMemo, useRef, useState } from 'react';
 import type { PanelType, DockProps } from '../types';
+import { VscAccount, VscFiles, VscSettingsGear, VscTerminal, VscFile, VscMail } from 'react-icons/vsc';
 
-const DOCK_ICONS = [
-  { id: 'about' as const,    emoji: '👤', label: 'about',    color: '#00c8ff' },
-  { id: 'projects' as const, emoji: '📁', label: 'projects', color: '#a855f7' },
-  { id: 'skills' as const,   emoji: '⚙️',  label: 'skills',   color: '#22c55e' },
-  { id: 'terminal' as const, emoji: '💻', label: 'terminal', color: '#f59e0b' },
-  { id: 'resume' as const,   emoji: '📄', label: 'resume',   color: '#3b82f6' },
-  { id: 'contact' as const,  emoji: '📬', label: 'contact',  color: '#fb7185' },
-];
+import './Dock.css';
 
-export default function Dock({ activePanel, onIconClick, visible }: DockProps & { visible: boolean }) {
-  const dockRef = useRef<HTMLDivElement>(null);
+interface DockItemProps {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  mouseX: MotionValue<number>;
+  spring: SpringOptions;
+  distance: number;
+  magnification: number;
+  baseItemSize: number;
+  isActive?: boolean;
+}
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (window.innerWidth <= 768) return;
-    const icons = dockRef.current?.querySelectorAll('.dock-icon') as NodeListOf<HTMLElement> | undefined;
-    if (!icons) return;
+function DockItem({ children, className = '', onClick, mouseX, spring, distance, magnification, baseItemSize, isActive }: DockItemProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isHovered = useMotionValue(0);
 
-    icons.forEach((icon) => {
-      const rect = icon.getBoundingClientRect();
-      const iconCenterX = rect.left + rect.width / 2;
-      const dist = Math.abs(e.clientX - iconCenterX);
+  const mouseDistance = useTransform(mouseX, val => {
+    const rect = ref.current?.getBoundingClientRect() ?? {
+      x: 0,
+      width: baseItemSize
+    };
+    return val - rect.x - baseItemSize / 2;
+  });
 
-      let scale = 1.0;
-      if (dist < 60) scale = 1.65;
-      else if (dist < 120) scale = 1.3;
-      else if (dist < 180) scale = 1.1;
-
-      icon.style.transform = `scale(${scale})`;
-    });
-  };
-
-  const handleMouseLeave = () => {
-    const icons = dockRef.current?.querySelectorAll('.dock-icon') as NodeListOf<HTMLElement> | undefined;
-    if (!icons) return;
-    icons.forEach((icon) => {
-      icon.style.transform = 'scale(1)';
-    });
-  };
+  const targetSize = useTransform(mouseDistance, [-distance, 0, distance], [baseItemSize, magnification, baseItemSize]);
+  const size = useSpring(targetSize, spring);
 
   return (
-    <div
-      className={`dock ${visible ? 'dock-visible' : ''}`}
-      ref={dockRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+    <motion.div
+      ref={ref}
+      style={{
+        width: size,
+        height: size
+      }}
+      onHoverStart={() => isHovered.set(1)}
+      onHoverEnd={() => isHovered.set(0)}
+      onFocus={() => isHovered.set(1)}
+      onBlur={() => isHovered.set(0)}
+      onClick={onClick}
+      className={`dock-item ${className}`}
+      data-active={isActive ? "true" : "false"}
+      tabIndex={0}
+      role="button"
+      aria-haspopup="true"
     >
-      {DOCK_ICONS.map((item) => (
-        <div key={item.id} style={{ display: 'contents' }}>
-          {/* Separator before contact */}
-          {item.id === 'contact' && <div className="dock-separator" />}
-          <div
-            className="dock-icon"
-            onClick={() => onIconClick(item.id as PanelType)}
-          >
-            <span className="emoji">{item.emoji}</span>
-            <span className="label">{item.label}</span>
-            <div
-              className={`dock-dot ${activePanel === item.id ? 'active' : ''}`}
-              style={{ background: item.color }}
-            />
-          </div>
-        </div>
-      ))}
-    </div>
+      {Children.map(children, child => {
+        if (React.isValidElement<{ isHovered: MotionValue<number> }>(child)) {
+          return cloneElement(child, { isHovered });
+        }
+        return child;
+      })}
+    </motion.div>
+  );
+}
+
+interface DockLabelProps {
+  children: React.ReactNode;
+  className?: string;
+  isHovered?: MotionValue<number>;
+}
+
+function DockLabel({ children, className = '', ...rest }: DockLabelProps) {
+  const { isHovered } = rest;
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (!isHovered) return;
+    const unsubscribe = isHovered.on('change', (latest: number) => {
+      setIsVisible(latest === 1);
+    });
+    return () => unsubscribe();
+  }, [isHovered]);
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0, y: 0 }}
+          animate={{ opacity: 1, y: -10 }}
+          exit={{ opacity: 0, y: 0 }}
+          transition={{ duration: 0.2 }}
+          className={`dock-label ${className}`}
+          role="tooltip"
+          style={{ x: '-50%' }}
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+interface DockIconProps {
+  children: React.ReactNode;
+  className?: string;
+  isHovered?: MotionValue<number>;
+}
+
+function DockIcon({ children, className = '' }: DockIconProps) {
+  return <div className={`dock-icon ${className}`}>{children}</div>;
+}
+
+interface Item {
+  id: PanelType;
+  icon: React.ReactNode;
+  label: string;
+}
+
+const ITEMS: Item[] = [
+  { id: 'about', icon: <VscAccount size={24} color="#00c8ff" />, label: 'About' },
+  { id: 'projects', icon: <VscFiles size={24} color="#a855f7" />, label: 'Projects' },
+  { id: 'skills', icon: <VscSettingsGear size={24} color="#22c55e" />, label: 'Skills' },
+  { id: 'terminal', icon: <VscTerminal size={24} color="#f59e0b" />, label: 'Terminal' },
+  { id: 'resume', icon: <VscFile size={24} color="#3b82f6" />, label: 'Resume' },
+  { id: 'contact', icon: <VscMail size={24} color="#fb7185" />, label: 'Contact' },
+];
+
+export default function Dock({
+  activePanel,
+  onIconClick,
+  visible,
+}: DockProps & { visible: boolean }) {
+  const className = '';
+  const spring: SpringOptions = { mass: 0.1, stiffness: 150, damping: 12 };
+  const magnification = 70;
+  const distance = 200;
+  const panelHeight = 68;
+  const dockHeight = 256;
+  const baseItemSize = 50;
+
+  const mouseX = useMotionValue(Infinity);
+  const isHovered = useMotionValue(0);
+
+  const maxHeight = useMemo(
+    () => Math.max(dockHeight, magnification + magnification / 2 + 4),
+    [magnification, dockHeight]
+  );
+  const heightRow = useTransform(isHovered, [0, 1], [panelHeight, maxHeight]);
+  const height = useSpring(heightRow, spring);
+
+  return (
+    <motion.div 
+      style={{ height, scrollbarWidth: 'none' }} 
+      className={`dock-outer ${visible ? 'dock-visible' : ''}`}
+    >
+      <motion.div
+        onMouseMove={(e: React.MouseEvent) => {
+          isHovered.set(1);
+          mouseX.set(e.pageX);
+        }}
+        onMouseLeave={() => {
+          isHovered.set(0);
+          mouseX.set(Infinity);
+        }}
+        className={`dock-panel ${className}`}
+        style={{ height: panelHeight }}
+        role="toolbar"
+        aria-label="Application dock"
+      >
+        {ITEMS.map((item, index) => (
+          <React.Fragment key={item.id ?? index}>
+            <DockItem
+              onClick={() => onIconClick(item.id)}
+              mouseX={mouseX}
+              spring={spring}
+              distance={distance}
+              magnification={magnification}
+              baseItemSize={baseItemSize}
+              isActive={activePanel === item.id}
+            >
+              <DockIcon>{item.icon}</DockIcon>
+              <DockLabel>{item.label}</DockLabel>
+            </DockItem>
+          </React.Fragment>
+        ))}
+      </motion.div>
+    </motion.div>
   );
 }
