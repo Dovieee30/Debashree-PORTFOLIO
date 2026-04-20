@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Debashree Mal — Portfolio OS. Developer, designer, builder." />
+  <title>Debashree Mal · Portfolio OS</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ───────── CSS VARIABLES ───────── */
+    :root {
+      --cyan: #00c8ff;
+      --purple: #7c3aed;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --bg: #06060f;
+    }
+
+    /* ───────── RESET ───────── */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ───────── BODY ───────── */
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg);
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text);
+      cursor: none;
+
+      /* Dot grid overlay */
+      background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px,
+          transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* Hide scrollbar everywhere */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* ───────── CUSTOM CURSOR ───────── */
+    #cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(0, 200, 255, 0.85);
+      box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.15s ease;
+      will-change: transform;
+    }
+
+    /* ───────── MENU BAR ───────── */
+    #menubar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      background: rgba(5, 5, 14, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 9999;
+      user-select: none;
+      opacity: 0;
+      transform: translateY(-28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    #menubar.menubar-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Left section */
+    .menubar-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .menubar-left .logo-emoji {
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .menubar-left .name {
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+    }
+
+    /* Right section */
+    .menubar-right {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      font-size: 11px;
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .menubar-right .item {
+      padding: 0 10px;
+      white-space: nowrap;
+      line-height: 28px;
+    }
+
+    .menubar-right .divider {
+      width: 1px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+    }
+
+    /* ───────── RAIN / ROBOT CHARS ───────── */
+    .rain-char {
+      position: fixed;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1;
+      color: var(--cyan);
+      opacity: 0.2;
+      pointer-events: none;
+      z-index: 1;
+      animation: rain-fall linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes rain-fall {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(100vh);
+      }
+    }
+
+    @keyframes breathing {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.82;
+      }
+    }
+
+    .breathing {
+      animation: breathing 3s ease-in-out infinite !important;
+    }
+
+    /* ───────── HERO TEXT ───────── */
+    #hero-text {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0;
+      /* hidden until positioned by JS */
+    }
+
+    #hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 0 24px rgba(0, 200, 255, 0.55);
+      letter-spacing: 0.15em;
+      min-height: 1.2em;
+    }
+
+    #hero-subtitle {
+      color: #64748b;
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      opacity: 0;
+      transition: opacity 1s ease;
+      margin-top: 10px;
+    }
+
+    /* ───────── DOCK ───────── */
+    #dock {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: rgba(10, 10, 22, 0.72);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 10px 18px;
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      z-index: 9998;
+      user-select: none;
+    }
+
+    #dock.dock-visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .dock-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: none;
+      transition: transform 0.2s ease;
+      transform-origin: bottom center;
+    }
+
+    .dock-icon .emoji {
+      font-size: 32px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .dock-icon .label {
+      font-size: 9px;
+      color: #64748b;
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .dock-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      margin-top: 2px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .dock-dot.active {
+      opacity: 1;
+    }
+
+    .dock-separator {
+      width: 1px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.07);
+      align-self: center;
+      flex-shrink: 0;
+    }
+
+    /* ───────── AMBIENT GLOW ORBS ───────── */
+    .ambient-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ambient-orb-1 {
+      width: 500px;
+      height: 500px;
+      top: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.09) 0%, transparent 70%);
+    }
+
+    .ambient-orb-2 {
+      width: 400px;
+      height: 400px;
+      bottom: -80px;
+      right: -80px;
+      background: radial-gradient(circle, rgba(0, 200, 255, 0.07) 0%, transparent 70%);
+    }
+
+    /* ───────── PANEL BASE ───────── */
+    .panel-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      animation: overlay-in 0.3s ease forwards;
+    }
+
+    @keyframes overlay-in {
+      to { opacity: 1; }
+    }
+
+    .panel {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: rgba(9, 9, 18, 0.93);
+      backdrop-filter: blur(32px);
+      -webkit-backdrop-filter: blur(32px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      box-shadow: 0 -16px 60px rgba(0, 0, 0, 0.7);
+      width: 460px;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel.panel-open {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Traffic lights */
+    .panel-traffic {
+      display: flex;
+      gap: 7px;
+      padding: 12px 14px 0 14px;
+    }
+
+    .traffic-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: filter 0.15s ease;
+    }
+
+    .traffic-dot:hover {
+      filter: brightness(1.3);
+    }
+
+    .traffic-red {
+      background: #ef4444;
+    }
+
+    .traffic-yellow {
+      background: #eab308;
+    }
+
+    .traffic-green {
+      background: #22c55e;
+    }
+
+    .panel-body {
+      padding: 16px 20px 20px 20px;
+    }
+
+    /* ───────── ABOUT PANEL ───────── */
+    .about-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .about-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00c8ff, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: #fff;
+      border: 2px solid rgba(0, 200, 255, 0.3);
+      box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
+      flex-shrink: 0;
+    }
+
+    .about-info .about-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .about-info .about-role {
+      font-size: 11px;
+      color: #00c8ff;
+      margin-top: 3px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .about-bio {
+      color: #94a3b8;
+      font-size: 12px;
+      line-height: 1.7;
+      margin-bottom: 14px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .about-tag {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #00c8ff;
+      border: 1px solid rgba(0, 200, 255, 0.35);
+      border-radius: 999px;
+      padding: 3px 10px;
+      white-space: nowrap;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      text-align: center;
+    }
+
+    .about-stat .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #00c8ff;
+    }
+
+    .about-stat .stat-label {
+      font-size: 10px;
+      color: #64748b;
+      margin-top: 2px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ───────── PROJECTS PANEL ───────── */
+    #panel-projects {
+      width: 500px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .project-card {
+      border-radius: 10px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .project-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .project-card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .project-card-tag {
+      font-size: 9px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 7px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .project-card-desc {
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.55;
+      margin-bottom: 8px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .project-card-stack {
+      font-size: 9px;
+      color: #64748b;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 6px;
+    }
+
+    .project-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      text-decoration: none;
+      border-radius: 6px;
+      padding: 3px 8px;
+      transition: background 0.15s ease;
+    }
+
+    .project-card-link:hover {
+      filter: brightness(1.2);
+    }
+
+    /* ───────── SKILLS PANEL (Activity Monitor) ───────── */
+    .skills-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .skills-table thead th {
+      font-size: 9px;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      padding: 0 0 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: left;
+    }
+
+    .skills-table thead th:nth-child(3),
+    .skills-table thead th:nth-child(4) {
+      text-align: center;
+    }
+
+    .skills-table tbody tr {
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .skills-table tbody tr.skill-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .skills-table tbody td {
+      padding: 7px 0;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #cbd5e1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .skills-table tbody td:nth-child(3) {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #22c55e;
+    }
+
+    .skills-table tbody td:nth-child(4) {
+      text-align: center;
+    }
+
+    .skill-bar-track {
+      width: 60px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: #22c55e;
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .skill-status {
+      font-size: 9px;
+      color: #22c55e;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .skills-footer {
+      font-size: 10px;
+      color: #475569;
+      text-align: center;
+      margin-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ───────── TERMINAL PANEL ───────── */
+    .terminal-inner {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 200px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    .terminal-line {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .terminal-line.typed {
+      opacity: 1;
+    }
+
+    @keyframes blink-cursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .terminal-cursor {
+      animation: blink-cursor 1s infinite;
+      color: #00c8ff;
+    }
+
+    /* ───────── RESUME PANEL ───────── */
+    .resume-content {
+      text-align: center;
+    }
+
+    .resume-icon {
+      font-size: 40px;
+      margin-bottom: 8px;
+    }
+
+    .resume-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .resume-subtitle {
+      font-size: 11px;
+      color: #64748b;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 4px;
+    }
+
+    .resume-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.05);
+      margin: 14px 0;
+    }
+
+    .resume-info-row {
+      font-size: 12px;
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 2;
+    }
+
+    .resume-download {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 16px;
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+
+    .resume-download:hover {
+      background: #2563eb;
+    }
+
+    .resume-note {
+      font-size: 9px;
+      color: #475569;
+      margin-top: 8px;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ───────── CONTACT PANEL ───────── */
+    .contact-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .contact-subtitle {
+      font-size: 11px;
+      color: #64748b;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 4px;
+    }
+
+    .contact-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.05);
+      margin: 14px 0;
+    }
+
+    .contact-row {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #94a3b8;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .contact-row:hover {
+      background: rgba(251, 113, 133, 0.08);
+      color: #fb7185;
+    }
+
+    .contact-note {
+      font-size: 10px;
+      color: #475569;
+      text-align: center;
+      margin-top: 14px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ───────── MOBILE RESPONSIVE ───────── */
+    @media (max-width: 768px) {
+      .rain-char {
+        font-size: 10px;
+      }
+
+      #hero-name {
+        font-size: 1.6rem;
+        letter-spacing: 0.08em;
+      }
+
+      #hero-subtitle {
+        font-size: 0.65rem;
+      }
+
+      #dock {
+        padding: 8px 12px;
+        gap: 4px;
+        border-radius: 16px;
+      }
+
+      .dock-icon .emoji {
+        font-size: 24px;
+      }
+
+      .dock-icon .label {
+        font-size: 7px;
+      }
+
+      .dock-separator {
+        height: 24px;
+      }
+
+      .panel {
+        width: calc(100vw - 32px) !important;
+        left: 16px;
+        transform: translateY(30px);
+      }
+
+      .panel.panel-open {
+        transform: translateY(0);
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menubar-right .item:not(#clock),
+      .menubar-right .divider {
+        display: none;
+      }
+
+      .about-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Ensure no default cursor anywhere */
+    *, *::before, *::after {
+      cursor: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Ambient glow orbs -->
+  <div class="ambient-orb ambient-orb-1"></div>
+  <div class="ambient-orb ambient-orb-2"></div>
+
+  <!-- Custom cursor -->
+  <div id="cursor"></div>
+
+  <!-- Menu bar -->
+  <nav id="menubar">
+    <div class="menubar-left">
+      <span class="logo-emoji">🤖</span>
+      <span class="name">Debashree Mal</span>
+    </div>
+
+    <div class="menubar-right">
+      <span class="item">⚡ SGPA 9.48</span>
+      <span class="divider"></span>
+      <span class="item">🟢 PLUTO: Live</span>
+      <span class="divider"></span>
+      <span class="item" id="clock">🕐 --:--:--</span>
+    </div>
+  </nav>
+
+  <!-- Hero text (positioned by JS below robot) -->
+  <div id="hero-text">
+    <h1 id="hero-name"></h1>
+    <p id="hero-subtitle">Computer Engineer · Builder</p>
+  </div>
+
+  <!-- ══════ ABOUT PANEL ══════ -->
+  <div class="panel" id="panel-about">
+    <div class="panel-traffic">
+      <div class="traffic-dot traffic-red" data-close="about"></div>
+      <div class="traffic-dot traffic-yellow"></div>
+      <div class="traffic-dot traffic-green"></div>
+    </div>
+    <div class="panel-body">
+      <div class="about-header">
+        <div class="about-avatar">D</div>
+        <div class="about-info">
+          <div class="about-name">Debashree Mal</div>
+          <div class="about-role">Computer Engineering · 2nd Year</div>
+        </div>
+      </div>
+      <p class="about-bio">Builder of AI-powered products for underserved Indian markets.</p>
+      <div class="about-tags">
+        <span class="about-tag">React</span>
+        <span class="about-tag">Node.js</span>
+        <span class="about-tag">AI/ML</span>
+        <span class="about-tag">Android</span>
+        <span class="about-tag">PostgreSQL</span>
+        <span class="about-tag">Supabase</span>
+        <span class="about-tag">Groq</span>
+        <span class="about-tag">Firebase</span>
+      </div>
+      <div class="about-stats">
+        <div class="about-stat"><div class="stat-num">9.48</div><div class="stat-label">SGPA</div></div>
+        <div class="about-stat"><div class="stat-num">3+</div><div class="stat-label">Hackathons</div></div>
+        <div class="about-stat"><div class="stat-num">1</div><div class="stat-label">Live Product</div></div>
+        <div class="about-stat"><div class="stat-num">2nd</div><div class="stat-label">Year</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ PROJECTS PANEL ══════ -->
+  <div class="panel" id="panel-projects">
+    <div class="panel-traffic">
+      <div class="traffic-dot traffic-red" data-close="projects"></div>
+      <div class="traffic-dot traffic-yellow"></div>
+      <div class="traffic-dot traffic-green"></div>
+    </div>
+    <div class="panel-body">
+      <div class="projects-grid">
+        <!-- PLUTO -->
+        <div class="project-card" style="border:1px solid rgba(168,85,247,0.2);" onmouseenter="this.style.background='rgba(168,85,247,0.08)';this.style.borderColor='rgba(168,85,247,0.4)'" onmouseleave="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(168,85,247,0.2)'">
+          <div class="project-card-head">
+            <span class="project-card-title">🪐 PLUTO</span>
+            <span class="project-card-tag" style="color:#a855f7; border:1px solid rgba(168,85,247,0.4);">Live · Production</span>
+          </div>
+          <p class="project-card-desc">AI college ecosystem for Indian students. Event discovery, inter-college collaboration, portfolios and organizer analytics.</p>
+          <div class="project-card-stack">Node.js · Supabase · Groq · Firebase · Vercel</div>
+          <a class="project-card-link" href="https://plutoooo.vercel.app" target="_blank" style="color:#a855f7; background:rgba(168,85,247,0.1);">plutoooo.vercel.app ↗</a>
+        </div>
+        <!-- FlowMind -->
+        <div class="project-card" style="border:1px solid rgba(0,200,255,0.2);" onmouseenter="this.style.background='rgba(0,200,255,0.08)';this.style.borderColor='rgba(0,200,255,0.4)'" onmouseleave="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(0,200,255,0.2)'">
+          <div class="project-card-head">
+            <span class="project-card-title">🧠 FlowMind</span>
+            <span class="project-card-tag" style="color:#00c8ff; border:1px solid rgba(0,200,255,0.4);">Hackathon</span>
+          </div>
+          <p class="project-card-desc">AI productivity tool built and pitched at hackathon.</p>
+          <div class="project-card-stack">React · AI API</div>
+        </div>
+        <!-- Travel Companion -->
+        <div class="project-card" style="border:1px solid rgba(34,197,94,0.2);" onmouseenter="this.style.background='rgba(34,197,94,0.08)';this.style.borderColor='rgba(34,197,94,0.4)'" onmouseleave="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(34,197,94,0.2)'">
+          <div class="project-card-head">
+            <span class="project-card-title">✈️ Travel Companion</span>
+            <span class="project-card-tag" style="color:#22c55e; border:1px solid rgba(34,197,94,0.4);">SIH</span>
+          </div>
+          <p class="project-card-desc">Smart travel planner built for Smart India Hackathon.</p>
+          <div class="project-card-stack">React · Maps API</div>
+        </div>
+        <!-- ZOKU -->
+        <div class="project-card" style="border:1px solid rgba(245,158,11,0.2);" onmouseenter="this.style.background='rgba(245,158,11,0.08)';this.style.borderColor='rgba(245,158,11,0.4)'" onmouseleave="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(245,158,11,0.2)'">
+          <div class="project-card-head">
+            <span class="project-card-title">🍜 ZOKU</span>
+            <span class="project-card-tag" style="color:#f59e0b; border:1px solid rgba(245,158,11,0.4);">App</span>
+          </div>
+          <p class="project-card-desc">Food truck aggregator — discover food trucks near you.</p>
+          <div class="project-card-stack">React · Supabase</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ SKILLS PANEL ══════ -->
+  <div class="panel" id="panel-skills">
+    <div class="panel-traffic">
+      <div class="traffic-dot traffic-red" data-close="skills"></div>
+      <div class="traffic-dot traffic-yellow"></div>
+      <div class="traffic-dot traffic-green"></div>
+    </div>
+    <div class="panel-body">
+      <table class="skills-table">
+        <thead>
+          <tr>
+            <th>Process</th>
+            <th>Usage Bar</th>
+            <th>%</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="skills-tbody">
+          <tr data-pct="88"><td>React.exe</td><td><div class="skill-bar-track"><div class="skill-bar-fill"></div></div></td><td>88%</td><td><span class="skill-status">● Running</span></td></tr>
+          <tr data-pct="82"><td>Node.js.exe</td><td><div class="skill-bar-track"><div class="skill-bar-fill"></div></div></td><td>82%</td><td><span class="skill-status">● Running</span></td></tr>
+          <tr data-pct="85"><td>Groq_AI.exe</td><td><div class="skill-bar-track"><div class="skill-bar-fill"></div></div></td><td>85%</td><td><span class="skill-status">● Running</span></td></tr>
+          <tr data-pct="75"><td>PostgreSQL.exe</td><td><div class="skill-bar-track"><div class="skill-bar-fill"></div></div></td><td>75%</td><td><span class="skill-status">● Running</span></td></tr>
+          <tr data-pct="70"><td>Android_Studio.exe</td><td><div class="skill-bar-track"><div class="skill-bar-fill"></div></div></td><td>70%</td><td><span class="skill-status">● Running</span></td></tr>
+          <tr data-pct="65"><td>Firebase.exe</td><td><div class="skill-bar-track"><div class="skill-bar-fill"></div></div></td><td>65%</td><td><span class="skill-status">● Running</span></td></tr>
+          <tr data-pct="60"><td>C++.exe</td><td><div class="skill-bar-track"><div class="skill-bar-fill"></div></div></td><td>60%</td><td><span class="skill-status">● Running</span></td></tr>
+          <tr data-pct="55"><td>Figma.exe</td><td><div class="skill-bar-track"><div class="skill-bar-fill"></div></div></td><td>55%</td><td><span class="skill-status">● Running</span></td></tr>
+        </tbody>
+      </table>
+      <div class="skills-footer">8 processes running · System: Optimal</div>
+    </div>
+  </div>
+
+  <!-- ══════ TERMINAL PANEL ══════ -->
+  <div class="panel" id="panel-terminal">
+    <div class="panel-traffic">
+      <div class="traffic-dot traffic-red" data-close="terminal"></div>
+      <div class="traffic-dot traffic-yellow"></div>
+      <div class="traffic-dot traffic-green"></div>
+    </div>
+    <div class="panel-body">
+      <div class="terminal-inner" id="terminal-inner"></div>
+    </div>
+  </div>
+
+  <!-- ══════ RESUME PANEL ══════ -->
+  <div class="panel" id="panel-resume">
+    <div class="panel-traffic">
+      <div class="traffic-dot traffic-red" data-close="resume"></div>
+      <div class="traffic-dot traffic-yellow"></div>
+      <div class="traffic-dot traffic-green"></div>
+    </div>
+    <div class="panel-body">
+      <div class="resume-content">
+        <div class="resume-icon">📄</div>
+        <div class="resume-title">Resume</div>
+        <div class="resume-subtitle">Debashree Mal · Computer Engineering</div>
+        <div class="resume-divider"></div>
+        <div class="resume-info-row">🎓 Computer Engineering · 2nd Year</div>
+        <div class="resume-info-row">⚡ SGPA: 9.48 / 10</div>
+        <div class="resume-info-row">💼 Seeking: SDE Internship</div>
+        <div class="resume-info-row">📍 Kharghar, Navi Mumbai</div>
+        <a class="resume-download" href="#" target="_blank">⬇ Download Resume</a>
+        <div class="resume-note">Last updated: 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ CONTACT PANEL ══════ -->
+  <div class="panel" id="panel-contact">
+    <div class="panel-traffic">
+      <div class="traffic-dot traffic-red" data-close="contact"></div>
+      <div class="traffic-dot traffic-yellow"></div>
+      <div class="traffic-dot traffic-green"></div>
+    </div>
+    <div class="panel-body">
+      <div class="contact-title">Say Hello 👋</div>
+      <div class="contact-subtitle">Open to SDE internship opportunities</div>
+      <div class="contact-divider"></div>
+      <a class="contact-row" href="mailto:debashreemal@email.com">📧  debashreemal@email.com</a>
+      <a class="contact-row" href="https://linkedin.com/in/debashreemal" target="_blank">💼  linkedin.com/in/debashreemal</a>
+      <a class="contact-row" href="https://github.com/debashreemal" target="_blank">🐙  github.com/debashreemal</a>
+      <a class="contact-row" href="#">📍  Kharghar, Navi Mumbai, India</a>
+      <div class="contact-note">Response within 24 hours ✓</div>
+    </div>
+  </div>
+
+  <!-- macOS Dock -->
+  <div id="dock">
+    <div class="dock-icon" data-panel="about">
+      <span class="emoji">👤</span>
+      <span class="label">about</span>
+      <div class="dock-dot" style="background:#00c8ff;"></div>
+    </div>
+    <div class="dock-icon" data-panel="projects">
+      <span class="emoji">📁</span>
+      <span class="label">projects</span>
+      <div class="dock-dot" style="background:#a855f7;"></div>
+    </div>
+    <div class="dock-icon" data-panel="skills">
+      <span class="emoji">⚙️</span>
+      <span class="label">skills</span>
+      <div class="dock-dot" style="background:#22c55e;"></div>
+    </div>
+    <div class="dock-icon" data-panel="terminal">
+      <span class="emoji">💻</span>
+      <span class="label">terminal</span>
+      <div class="dock-dot" style="background:#f59e0b;"></div>
+    </div>
+    <div class="dock-icon" data-panel="resume">
+      <span class="emoji">📄</span>
+      <span class="label">resume</span>
+      <div class="dock-dot" style="background:#3b82f6;"></div>
+    </div>
+    <div class="dock-separator"></div>
+    <div class="dock-icon" data-panel="contact">
+      <span class="emoji">📬</span>
+      <span class="label">contact</span>
+      <div class="dock-dot" style="background:#fb7185;"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ══════════════════════════════════════════
+       CUSTOM CURSOR
+       ══════════════════════════════════════════ */
+    const cursor = document.getElementById('cursor');
+    let mouseX = -40, mouseY = -40;
+    let cursorX = -40, cursorY = -40;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
+
+    function animateCursor() {
+      cursorX += (mouseX - cursorX) * 0.25;
+      cursorY += (mouseY - cursorY) * 0.25;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top = cursorY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    /* ══════════════════════════════════════════
+       LIVE CLOCK
+       ══════════════════════════════════════════ */
+    const clockEl = document.getElementById('clock');
+    function updateClock() {
+      const n = new Date();
+      let h = n.getHours();
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+      clockEl.textContent = `🕐 ${String(h).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')} ${ampm}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    /* ══════════════════════════════════════════
+       ROBOT SHAPE DEFINITION
+       ══════════════════════════════════════════ */
+    // Each line padded to 19 chars so head (17) aligns with body (19)
+    const robotLines = [
+      ' \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 ',
+      ' \u2551   \u25C9       \u25C9   \u2551 ',
+      ' \u2551       \u25B2       \u2551 ',
+      ' \u2551    \u2570\u2500\u2500\u2500\u2500\u2500\u256F    \u2551 ',
+      ' \u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D ',
+      '\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557',
+      '\u2551                 \u2551',
+      '\u2560\u2550\u2557    [D.M]    \u2554\u2550\u2563',
+      '\u2551                 \u2551',
+      '\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D',
+      '   \u2551           \u2551   ',
+      '  \u2550\u2569\u2550         \u2550\u2569\u2550  '
+    ];
+
+    const CHAR_W = 8.4;
+    const LINE_H = 18;
+    const COLS = 19;
+    const ROWS = robotLines.length;
+    const targets = [];
+    const eyeTargetIndices = [];
+
+    robotLines.forEach((line, row) => {
+      let extraY = 0;
+      if (row >= 5) extraY += 6;
+      if (row >= 10) extraY += 4;
+
+      for (let col = 0; col < line.length; col++) {
+        const ch = line[col];
+        if (ch !== ' ') {
+          if (ch === '\u25C9') eyeTargetIndices.push(targets.length);
+          targets.push({
+            x: (col - COLS / 2) * CHAR_W,
+            y: (row - ROWS / 2) * LINE_H + extraY,
+            char: ch
+          });
+        }
+      }
+    });
+
+    /* ══════════════════════════════════════════
+       STEP 1 — ASCII RAIN
+       ══════════════════════════════════════════ */
+    const rainChars = '\u2591\u2593\u2554\u2551\u2550\u25C9\u25B2\u2502\\/[]{}#@*^~';
+    const TOTAL = 140;
+    const charDivs = [];
+
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight * 0.40;
+
+    for (let i = 0; i < TOTAL; i++) {
+      const d = document.createElement('div');
+      d.className = 'rain-char';
+      d.textContent = rainChars[Math.floor(Math.random() * rainChars.length)];
+      d.style.left = (Math.random() * window.innerWidth) + 'px';
+      d.style.top = (Math.random() * window.innerHeight) + 'px';
+      d.style.animationDuration = (3 + Math.random() * 3) + 's';
+      d.style.animationDelay = (Math.random() * 2) + 's';
+      document.body.appendChild(d);
+      charDivs.push(d);
+    }
+
+    /* ══════════════════════════════════════════
+       STEP 2 — ASSEMBLY (after 1.8s)
+       ══════════════════════════════════════════ */
+    const eyeDivs = [];
+
+    setTimeout(() => {
+      charDivs.forEach((d, i) => {
+        const rect = d.getBoundingClientRect();
+
+        d.style.animation = 'none';
+        d.style.left = rect.left + 'px';
+        d.style.top = rect.top + 'px';
+        d.style.transform = 'none';
+
+        void d.offsetHeight;
+
+        if (i < targets.length) {
+          const t = targets[i];
+          const delay = Math.random() * 400;
+
+          d.textContent = t.char;
+          d.style.color = 'var(--cyan)';
+          d.style.opacity = '1';
+          d.style.transition =
+            `left 0.8s ease-in-out ${delay}ms, ` +
+            `top 0.8s ease-in-out ${delay}ms, ` +
+            `opacity 0.5s ease-in-out ${delay}ms`;
+          d.style.left = (cx + t.x - CHAR_W / 2) + 'px';
+          d.style.top = (cy + t.y) + 'px';
+
+          if (eyeTargetIndices.includes(i)) {
+            eyeDivs.push({
+              div: d,
+              baseX: cx + t.x - CHAR_W / 2,
+              baseY: cy + t.y
+            });
+          }
+        } else {
+          d.style.transition = 'opacity 0.6s ease-out';
+          d.style.opacity = '0';
+          setTimeout(() => d.remove(), 800);
+        }
+      });
+
+      // 2.6s mark: breathing starts (0.8s after assembly = 1.8+0.8)
+      setTimeout(() => {
+        for (let i = 0; i < targets.length; i++) {
+          charDivs[i].style.transition = 'none';
+          charDivs[i].classList.add('breathing');
+        }
+        startEyeTracking();
+      }, 800);
+
+      // 2.8s mark: name typewriter begins (1.0s after assembly)
+      setTimeout(() => {
+        typewriterName();
+      }, 1000);
+
+      // 4.5s mark: dock + menubar (2.7s after assembly)
+      setTimeout(() => {
+        document.getElementById('dock').classList.add('dock-visible');
+        document.getElementById('menubar').classList.add('menubar-visible');
+      }, 2700);
+
+    }, 1800);
+
+    /* ══════════════════════════════════════════
+       STEP 3 — EYES FOLLOW CURSOR
+       ══════════════════════════════════════════ */
+    function startEyeTracking() {
+      document.addEventListener('mousemove', (e) => {
+        eyeDivs.forEach(({ div, baseX, baseY }) => {
+          const ecx = baseX + CHAR_W / 2;
+          const ecy = baseY + LINE_H / 2;
+          const dx = e.clientX - ecx;
+          const dy = e.clientY - ecy;
+          const ang = Math.atan2(dy, dx);
+          const dist = Math.min(3, Math.hypot(dx, dy) / 80 * 3);
+          div.style.transform =
+            `translate(${Math.cos(ang) * dist}px, ${Math.sin(ang) * dist}px)`;
+        });
+      });
+    }
+
+    /* ══════════════════════════════════════════
+       STEP 4 — NAME + SUBTITLE TYPEWRITER
+       ══════════════════════════════════════════ */
+    function typewriterName() {
+      const heroText = document.getElementById('hero-text');
+      const heroName = document.getElementById('hero-name');
+      const heroSub = document.getElementById('hero-subtitle');
+
+      const robotBottom = cy + (ROWS / 2) * LINE_H + 10;
+      heroText.style.top = (robotBottom + 55) + 'px';
+      heroText.style.opacity = '1';
+
+      const name = 'D E B A S H R E E          M A L';
+      let idx = 0;
+
+      const interval = setInterval(() => {
+        if (idx < name.length) {
+          heroName.textContent += name[idx];
+          idx++;
+        } else {
+          clearInterval(interval);
+          setTimeout(() => { heroSub.style.opacity = '1'; }, 300);
+        }
+      }, 100);
+    }
+
+    /* ══════════════════════════════════════════
+       DOCK — SLIDE-UP + MAGNIFICATION
+       ══════════════════════════════════════════ */
+    (function () {
+      const dock = document.getElementById('dock');
+      const dockIcons = dock.querySelectorAll('.dock-icon');
+
+      // Smooth slide-up transition
+      dock.style.transition = 'transform 0.6s cubic-bezier(0.34,1.56,0.64,1), opacity 0.6s ease';
+
+      // Dock slide-in is now triggered from the assembly setTimeout above
+
+      // ── Magnification on mousemove ──
+      dock.addEventListener('mousemove', (e) => {
+        dockIcons.forEach((icon) => {
+          const rect = icon.getBoundingClientRect();
+          const iconCenterX = rect.left + rect.width / 2;
+          const dist = Math.abs(e.clientX - iconCenterX);
+
+          let scale = 1.0;
+          if (dist < 60) scale = 1.65;
+          else if (dist < 120) scale = 1.3;
+          else if (dist < 180) scale = 1.1;
+
+          icon.style.transform = `scale(${scale})`;
+        });
+      });
+
+      // Reset scale on mouse leave
+      dock.addEventListener('mouseleave', () => {
+        dockIcons.forEach((icon) => {
+          icon.style.transform = 'scale(1)';
+        });
+      });
+
+      // ── Panel open / close logic ──
+      let activePanel = null;
+      let overlayEl = null;
+
+      function closeActivePanel(cb) {
+        if (!activePanel) { if (cb) cb(); return; }
+
+        const panelEl = document.getElementById('panel-' + activePanel);
+        const dot = dock.querySelector(`.dock-icon[data-panel="${activePanel}"] .dock-dot`);
+
+        if (panelEl) panelEl.classList.remove('panel-open');
+        if (dot) dot.classList.remove('active');
+
+        if (overlayEl) { overlayEl.remove(); overlayEl = null; }
+
+        activePanel = null;
+        if (cb) setTimeout(cb, 350);
+      }
+
+      function openPanel(name) {
+        const panelEl = document.getElementById('panel-' + name);
+        if (!panelEl) return;
+
+        // Create click-outside overlay
+        overlayEl = document.createElement('div');
+        overlayEl.className = 'panel-overlay';
+        overlayEl.addEventListener('click', () => closeActivePanel());
+        document.body.appendChild(overlayEl);
+
+        const dot = dock.querySelector(`.dock-icon[data-panel="${name}"] .dock-dot`);
+        if (dot) dot.classList.add('active');
+
+        // Small delay for DOM paint
+        requestAnimationFrame(() => {
+          panelEl.classList.add('panel-open');
+        });
+
+        activePanel = name;
+
+        // Panel-specific animations
+        if (name === 'skills') animateSkills();
+        if (name === 'terminal') startTerminalTyping();
+      }
+
+      /* ─── Skills: staggered row animation ─── */
+      function animateSkills() {
+        const rows = document.querySelectorAll('#skills-tbody tr');
+        rows.forEach((row) => {
+          row.classList.remove('skill-visible');
+          const fill = row.querySelector('.skill-bar-fill');
+          if (fill) fill.style.width = '0%';
+        });
+
+        rows.forEach((row, i) => {
+          setTimeout(() => {
+            row.classList.add('skill-visible');
+            const pct = row.getAttribute('data-pct');
+            const fill = row.querySelector('.skill-bar-fill');
+            if (fill) {
+              setTimeout(() => { fill.style.width = pct + '%'; }, 80);
+            }
+          }, i * 80);
+        });
+      }
+
+      /* ─── Terminal: auto-type lines ─── */
+      let terminalTimeout = null;
+      const terminalLines = [
+        { text: '$ whoami', color: '#00c8ff' },
+        { text: '→ Debashree Mal | CS Engineer', color: '#e2e8f0' },
+        { text: '', color: 'transparent' },
+        { text: '$ ls projects/', color: '#00c8ff' },
+        { text: '→ PLUTO  FlowMind  TravelCompanion  ZOKU', color: '#94a3b8' },
+        { text: '', color: 'transparent' },
+        { text: '$ cat achievements.txt', color: '#00c8ff' },
+        { text: '→ SIH · Avishkar 2026 · SGPA 9.48 · 1 Live App', color: '#22c55e' },
+        { text: '', color: 'transparent' },
+        { text: '$ ./mission.sh', color: '#00c8ff' },
+        { text: '→ Building AI for underserved Indian markets.', color: '#a855f7' },
+        { text: '', color: 'transparent' },
+        { text: '$ cat status.txt', color: '#00c8ff' },
+        { text: '→ Open to SDE internships · Available now', color: '#22c55e' },
+        { text: '', color: 'transparent' },
+        { text: '$ _', color: '#00c8ff', cursor: true },
+      ];
+
+      function startTerminalTyping() {
+        const container = document.getElementById('terminal-inner');
+        container.innerHTML = '';
+        if (terminalTimeout) clearTimeout(terminalTimeout);
+
+        let i = 0;
+        function typeLine() {
+          if (i >= terminalLines.length) return;
+          const line = terminalLines[i];
+          const div = document.createElement('div');
+          div.className = 'terminal-line';
+
+          if (line.cursor) {
+            div.innerHTML = `<span style="color:${line.color}">$ </span><span class="terminal-cursor" style="color:${line.color}">█</span>`;
+          } else if (line.text === '') {
+            div.innerHTML = '&nbsp;';
+          } else {
+            div.style.color = line.color;
+            div.textContent = line.text;
+          }
+
+          container.appendChild(div);
+          requestAnimationFrame(() => { div.classList.add('typed'); });
+
+          i++;
+          if (i < terminalLines.length) {
+            terminalTimeout = setTimeout(typeLine, 280);
+          }
+        }
+        typeLine();
+      }
+
+      // Dock icon click
+      dockIcons.forEach((icon) => {
+        icon.addEventListener('click', () => {
+          const panelName = icon.getAttribute('data-panel');
+
+          if (activePanel === panelName) {
+            // Toggle off
+            closeActivePanel();
+          } else if (activePanel) {
+            // Switch panels
+            closeActivePanel(() => openPanel(panelName));
+          } else {
+            openPanel(panelName);
+          }
+        });
+      });
+
+      // Traffic-light red dot closes
+      document.querySelectorAll('.traffic-dot[data-close]').forEach((dot) => {
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeActivePanel();
+        });
+      });
+
+      // ── Escape key closes panel ──
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeActivePanel();
+      });
+
+      // ── Disable magnification on mobile ──
+      if (window.innerWidth <= 768) {
+        dock.onmousemove = null;
+      }
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+import { useState, useEffect, useCallback } from 'react';
+import MenuBar from './components/MenuBar';
+import Robot from './components/Robot';
+import Dock from './components/Dock';
+import CustomCursor from './components/CustomCursor';
+import AboutPanel from './components/panels/AboutPanel';
+import ProjectsPanel from './components/panels/ProjectsPanel';
+import SkillsPanel from './components/panels/SkillsPanel';
+import TerminalPanel from './components/panels/TerminalPanel';
+import ResumePanel from './components/panels/ResumePanel';
+import ContactPanel from './components/panels/ContactPanel';
+import type { PanelType } from './types';
+
+export default function App() {
+  const [activePanel, setActivePanel] = useState<PanelType>(null);
+  const [sequenceComplete, setSequenceComplete] = useState(false);
+
+  const togglePanel = (panel: PanelType) => {
+    setActivePanel(prev => prev === panel ? null : panel);
+  };
+
+  const closePanel = () => setActivePanel(null);
+
+  // Escape key closes active panel
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActivePanel(null);
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+
+  const handleRobotReady = useCallback(() => {
+    setSequenceComplete(true);
+  }, []);
+
+  return (
+    <>
+      {/* Ambient glow orbs */}
+      <div className="ambient-orb ambient-orb-1" />
+      <div className="ambient-orb ambient-orb-2" />
+
+      <CustomCursor />
+      <MenuBar visible={sequenceComplete} />
+      <Robot onReady={handleRobotReady} />
+
+      {/* Panels — only the active one renders */}
+      {activePanel === 'about' &&
+        <AboutPanel onClose={closePanel} />}
+      {activePanel === 'projects' &&
+        <ProjectsPanel onClose={closePanel} />}
+      {activePanel === 'skills' &&
+        <SkillsPanel onClose={closePanel} />}
+      {activePanel === 'terminal' &&
+        <TerminalPanel onClose={closePanel} />}
+      {activePanel === 'resume' &&
+        <ResumePanel onClose={closePanel} />}
+      {activePanel === 'contact' &&
+        <ContactPanel onClose={closePanel} />}
+
+      {/* Backdrop overlay — click to close */}
+      {activePanel && (
+        <div
+          className="backdrop"
+          onClick={closePanel}
+        />
+      )}
+
+      <Dock
+        activePanel={activePanel}
+        onIconClick={togglePanel}
+        visible={sequenceComplete}
+      />
+    </>
+  );
+}
