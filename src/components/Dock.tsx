@@ -4,7 +4,14 @@ import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from
 import type { SpringOptions, MotionValue } from 'motion/react';
 import React, { Children, cloneElement, useEffect, useMemo, useRef, useState } from 'react';
 import type { PanelType, DockProps } from '../types';
-import { VscAccount, VscFiles, VscSettingsGear, VscTerminal, VscFile, VscMail } from 'react-icons/vsc';
+import { 
+  FiUser, 
+  FiFolder, 
+  FiSettings, 
+  FiTerminal, 
+  FiFileText, 
+  FiMail 
+} from 'react-icons/fi';
 
 import './Dock.css';
 
@@ -36,30 +43,44 @@ function DockItem({ children, className = '', onClick, mouseX, spring, distance,
   const size = useSpring(targetSize, spring);
 
   return (
-    <motion.div
-      ref={ref}
-      style={{
-        width: size,
-        height: size
-      }}
-      onHoverStart={() => isHovered.set(1)}
-      onHoverEnd={() => isHovered.set(0)}
-      onFocus={() => isHovered.set(1)}
-      onBlur={() => isHovered.set(0)}
-      onClick={onClick}
-      className={`dock-item ${className}`}
-      data-active={isActive ? "true" : "false"}
-      tabIndex={0}
-      role="button"
-      aria-haspopup="true"
-    >
-      {Children.map(children, child => {
-        if (React.isValidElement<{ isHovered: MotionValue<number> }>(child)) {
-          return cloneElement(child, { isHovered });
-        }
-        return child;
-      })}
-    </motion.div>
+    <div className="dock-item-wrapper">
+      <motion.div
+        ref={ref}
+        style={{
+          width: size,
+          height: size
+        }}
+        onHoverStart={() => isHovered.set(1)}
+        onHoverEnd={() => isHovered.set(0)}
+        onFocus={() => isHovered.set(1)}
+        onBlur={() => isHovered.set(0)}
+        onClick={onClick}
+        className={`dock-item ${className}`}
+        data-active={isActive ? "true" : "false"}
+        tabIndex={0}
+        role="button"
+        aria-haspopup="true"
+      >
+        {Children.map(children, child => {
+          if (React.isValidElement<{ isHovered: MotionValue<number> }>(child)) {
+            return cloneElement(child, { isHovered });
+          }
+          return child;
+        })}
+      </motion.div>
+      
+      {/* macOS style active indicator dot */}
+      <AnimatePresence>
+        {isActive && (
+          <motion.div 
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            className="dock-active-dot" 
+          />
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -117,12 +138,12 @@ interface Item {
 }
 
 const ITEMS: Item[] = [
-  { id: 'about', icon: <VscAccount size={24} color="#00c8ff" />, label: 'About' },
-  { id: 'projects', icon: <VscFiles size={24} color="#a855f7" />, label: 'Projects' },
-  { id: 'skills', icon: <VscSettingsGear size={24} color="#22c55e" />, label: 'Skills' },
-  { id: 'terminal', icon: <VscTerminal size={24} color="#f59e0b" />, label: 'Terminal' },
-  { id: 'resume', icon: <VscFile size={24} color="#3b82f6" />, label: 'Resume' },
-  { id: 'contact', icon: <VscMail size={24} color="#fb7185" />, label: 'Contact' },
+  { id: 'about', icon: <FiUser size={24} />, label: 'About' },
+  { id: 'projects', icon: <FiFolder size={24} />, label: 'Projects' },
+  { id: 'skills', icon: <FiSettings size={24} />, label: 'Skills' },
+  { id: 'terminal', icon: <FiTerminal size={24} />, label: 'Terminal' },
+  { id: 'resume', icon: <FiFileText size={24} />, label: 'Resume' },
+  { id: 'contact', icon: <FiMail size={24} />, label: 'Contact' },
 ];
 
 export default function Dock({
@@ -131,12 +152,12 @@ export default function Dock({
   visible,
 }: DockProps & { visible: boolean }) {
   const className = '';
-  const spring: SpringOptions = { mass: 0.1, stiffness: 150, damping: 12 };
+  const spring: SpringOptions = { mass: 0.1, stiffness: 200, damping: 15 };
   const magnification = 70;
-  const distance = 200;
-  const panelHeight = 68;
+  const distance = 180;
+  const panelHeight = 64;
   const dockHeight = 256;
-  const baseItemSize = 50;
+  const baseItemSize = 46;
 
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
