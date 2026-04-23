@@ -1,10 +1,9 @@
 import { useRef, useEffect, useState } from 'react';
 
 export default function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
   const mousePos = useRef({ x: -40, y: -40 });
-  const cursorPos = useRef({ x: -40, y: -40 });
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
@@ -20,11 +19,10 @@ export default function CustomCursor() {
 
     let raf: number;
     const animate = () => {
-      cursorPos.current.x += (mousePos.current.x - cursorPos.current.x) * 0.25;
-      cursorPos.current.y += (mousePos.current.y - cursorPos.current.y) * 0.25;
-      if (cursorRef.current) {
-        cursorRef.current.style.left = cursorPos.current.x + 'px';
-        cursorRef.current.style.top = cursorPos.current.y + 'px';
+      // Single ring snaps directly to cursor — clean, instant, Apple-like
+      if (ringRef.current) {
+        ringRef.current.style.left = mousePos.current.x + 'px';
+        ringRef.current.style.top = mousePos.current.y + 'px';
       }
       raf = requestAnimationFrame(animate);
     };
@@ -40,8 +38,8 @@ export default function CustomCursor() {
 
   return (
     <div
-      className="custom-cursor"
-      ref={cursorRef}
+      ref={ringRef}
+      className="cursor-ring"
       style={{ opacity: visible ? 1 : 0 }}
     />
   );

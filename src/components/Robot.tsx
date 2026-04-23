@@ -1,203 +1,175 @@
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState, useRef, Suspense } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useGLTF, Environment, OrbitControls } from '@react-three/drei';
+import * as THREE from 'three';
+import TextType from './TextType';
+import RotatingText from './RotatingText';
 
-const robotLines = [
-  ' \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 ',
-  ' \u2551   \u25C9       \u25C9   \u2551 ',
-  ' \u2551       \u25B2       \u2551 ',
-  ' \u2551    \u2570\u2500\u2500\u2500\u2500\u2500\u256F    \u2551 ',
-  ' \u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D ',
-  '\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557',
-  '\u2551                 \u2551',
-  '\u2560\u2550\u2557    [D.M]    \u2554\u2550\u2563',
-  '\u2551                 \u2551',
-  '\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255D',
-  '   \u2551           \u2551   ',
-  '  \u2550\u2569\u2550         \u2550\u2569\u2550  '
-];
+// Global variable strictly for buttery 60fps tracking without causing React to stutter
+const cursorState = { x: 0, y: 0, isHoveringCanvas: false };
 
-const CHAR_W = 8.4;
-const LINE_H = 18;
-const COLS = 19;
-const ROWS = robotLines.length;
-const TOTAL_RAIN = 140;
-const rainChars = '\u2591\u2593\u2554\u2551\u2550\u25C9\u25B2\u2502\\/[]{}#@*^~';
+if (typeof window !== 'undefined') {
+  window.addEventListener('mousemove', (e) => {
+    // SPATIAL TRACKING ALGORITHM:
+    // The robot physically sits on the Right Hand Side at roughly 81% (0.81) of the screen width, and its eyes are at roughly 40% (0.40) screen height.
+    // By calculating the cursor's Delta exactly relative to the robot's mechanical eyes, it will literally 'look' at the cursor natively!
+    const robotEyeX = window.innerWidth * 0.81;
+    const robotEyeY = window.innerHeight * 0.40;
 
-interface TargetChar {
-  x: number;
-  y: number;
-  char: string;
+    // Generate normalized true-relative coordinates (Sensitivity calmed down to 0.8 for subtle glances)
+    cursorState.x = ((e.clientX - robotEyeX) / window.innerWidth) * 0.8;
+    cursorState.y = -(e.clientY - robotEyeY) / window.innerHeight; 
+  });
 }
 
-function buildTargets() {
-  const targets: TargetChar[] = [];
-  const eyeIndices: number[] = [];
+// 1. Our Native 3D Robot Component Engine
+function RobotModel() {
+  // Pre-loads and parses the .glb geometry natively at lightspeed from the public folder
+  const { scene } = useGLTF('/robot.glb');
+  const groupRef = useRef<THREE.Group>(null);
 
-  robotLines.forEach((line, row) => {
-    let extraY = 0;
-    if (row >= 5) extraY += 6;
-    if (row >= 10) extraY += 4;
+  // 2. True 3D Mouse Tracking sequence
+  useFrame(() => {
+    if (groupRef.current) {
+      // HOVER OVERRIDE: If the user brings the mouse to the robot to manually grab it, 
+      // the robot smoothly 'relaxes' its neck back to the neutral looking-forward position!
+      let targetX = cursorState.isHoveringCanvas ? 0 : cursorState.x * (Math.PI / 2.5); 
+      
+      // STRICT GEOMETRY CLAMP: Prevents the robot from doing too large of a body pivot.
+      // Capped rigidly at roughly 36 degrees! It will execute a very polite, tight glance instead of a deep turn.
+      const maxAngle = Math.PI / 5;
+      targetX = Math.max(-maxAngle, Math.min(maxAngle, targetX));
 
-    for (let col = 0; col < line.length; col++) {
-      const ch = line[col];
-      if (ch !== ' ') {
-        if (ch === '\u25C9') eyeIndices.push(targets.length);
-        targets.push({
-          x: (col - COLS / 2) * CHAR_W,
-          y: (row - ROWS / 2) * LINE_H + extraY,
-          char: ch
-        });
-      }
+      // Capped the pitch limit strictly to PI/10 (roughly 18 degrees) so the vertical movements are equally subtle.
+      const targetY = cursorState.isHoveringCanvas ? 0 : -cursorState.y * (Math.PI / 10);   
+
+      // Lerp (Linear Interpolate) creates buttery smooth mechanical neck/body movement
+      groupRef.current.rotation.y += (targetX - groupRef.current.rotation.y) * 0.05;
+      groupRef.current.rotation.x += (targetY - groupRef.current.rotation.x) * 0.05;
     }
   });
 
-  return { targets, eyeIndices };
+  return (
+    <group ref={groupRef} dispose={null}>
+      {/* 
+        User Request: "head to waist only". 
+        Removed the aggressive negative Y drop. 
+      */}
+      <primitive object={scene} scale={3.5} position={[0, -2, 0]} />
+    </group>
+  );
 }
 
-const { targets, eyeIndices } = buildTargets();
-
+// 3. Hero Section Parent Component
 export default function Robot({ onReady }: { onReady: () => void }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const heroTextRef = useRef<HTMLDivElement>(null);
-  const [nameText, setNameText] = useState('');
-  const [subtitleVisible, setSubtitleVisible] = useState(false);
-
+  // Fire the portfolio boot sequence immediately — no typing delay
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const charDivs: HTMLDivElement[] = [];
-    const eyeDivs: { div: HTMLDivElement; baseX: number; baseY: number }[] = [];
-
-    const cx = window.innerWidth / 2;
-    const cy = window.innerHeight * 0.40;
-
-    // Position hero text below robot
-    if (heroTextRef.current) {
-      const robotBottom = cy + (ROWS / 2) * LINE_H + 10;
-      heroTextRef.current.style.top = (robotBottom + 55) + 'px';
-    }
-
-    // STEP 1 — ASCII RAIN
-    for (let i = 0; i < TOTAL_RAIN; i++) {
-      const d = document.createElement('div');
-      d.className = 'rain-char';
-      d.textContent = rainChars[Math.floor(Math.random() * rainChars.length)];
-      d.style.left = (Math.random() * window.innerWidth) + 'px';
-      d.style.top = (Math.random() * window.innerHeight) + 'px';
-      d.style.animationDuration = (3 + Math.random() * 3) + 's';
-      d.style.animationDelay = (Math.random() * 2) + 's';
-      container.appendChild(d);
-      charDivs.push(d);
-    }
-
-    // STEP 2 — ASSEMBLY (after 1.8s)
-    const tAssembly = setTimeout(() => {
-      charDivs.forEach((d, i) => {
-        const rect = d.getBoundingClientRect();
-        d.style.animation = 'none';
-        d.style.left = rect.left + 'px';
-        d.style.top = rect.top + 'px';
-        d.style.transform = 'none';
-        void d.offsetHeight; // force reflow
-
-        if (i < targets.length) {
-          const t = targets[i];
-          const delay = Math.random() * 400;
-          d.textContent = t.char;
-          d.style.color = 'var(--cyan)';
-          d.style.opacity = '1';
-          d.style.transition =
-            `left 0.8s ease-in-out ${delay}ms, ` +
-            `top 0.8s ease-in-out ${delay}ms, ` +
-            `opacity 0.5s ease-in-out ${delay}ms`;
-
-          const finalX = cx + t.x - CHAR_W / 2;
-          const finalY = cy + t.y;
-          d.style.left = finalX + 'px';
-          d.style.top = finalY + 'px';
-
-          if (eyeIndices.includes(i)) {
-            eyeDivs.push({ div: d, baseX: finalX, baseY: finalY });
-          }
-        } else {
-          d.style.transition = 'opacity 0.6s ease-out';
-          d.style.opacity = '0';
-          setTimeout(() => d.remove(), 800);
-        }
-      });
-    }, 1800);
-
-    // STEP 3 — BREATHING + EYES (2.6s mark = 1.8s + 0.8s)
-    const eyeHandler = (e: MouseEvent) => {
-      eyeDivs.forEach(({ div, baseX, baseY }) => {
-        const ecx = baseX + CHAR_W / 2;
-        const ecy = baseY + LINE_H / 2;
-        const dx = e.clientX - ecx;
-        const dy = e.clientY - ecy;
-        const ang = Math.atan2(dy, dx);
-        const dist = Math.min(3, Math.hypot(dx, dy) / 80 * 3);
-        div.style.transform = `translate(${Math.cos(ang) * dist}px, ${Math.sin(ang) * dist}px)`;
-      });
-    };
-
-    const tBreathing = setTimeout(() => {
-      for (let i = 0; i < targets.length; i++) {
-        if (charDivs[i]) {
-          charDivs[i].style.transition = 'none';
-          charDivs[i].classList.add('breathing');
-        }
-      }
-      document.addEventListener('mousemove', eyeHandler);
-    }, 1800 + 800);
-
-    // STEP 4 — TYPEWRITER (2.8s mark = 1.8s + 1.0s)
-    let typeInterval: ReturnType<typeof setInterval>;
-    const tTypewriter = setTimeout(() => {
-      if (heroTextRef.current) heroTextRef.current.style.opacity = '1';
-
-      const fullName = 'D E B A S H R E E M A L';
-      let idx = 0;
-      typeInterval = setInterval(() => {
-        if (idx < fullName.length) {
-          const char = fullName[idx];
-          setNameText(prev => prev + char);
-          idx++;
-        } else {
-          clearInterval(typeInterval);
-          // Show subtitle after 300ms
-          setTimeout(() => setSubtitleVisible(true), 300);
-          // Signal dock/menubar after ~700ms more
-          setTimeout(() => onReady(), 700);
-        }
-      }, 100);
-    }, 1800 + 1000);
-
-    return () => {
-      clearTimeout(tAssembly);
-      clearTimeout(tBreathing);
-      clearTimeout(tTypewriter);
-      clearInterval(typeInterval);
-      document.removeEventListener('mousemove', eyeHandler);
-      // Clean up rain chars
-      charDivs.forEach(d => { if (d.parentNode) d.remove(); });
-    };
+    const t = setTimeout(() => onReady(), 300);
+    return () => clearTimeout(t);
   }, [onReady]);
 
   return (
     <>
-      <div ref={containerRef} style={{ position: 'absolute', inset: 0 }} />
-      <div
-        className="hero-text"
-        ref={heroTextRef}
-        style={{ opacity: 0, transition: 'opacity 0.5s' }}
+      <div 
+        style={{ 
+          position: 'fixed', 
+          inset: 0, 
+          zIndex: 0, 
+          overflow: 'hidden', 
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          pointerEvents: 'none'
+        }}
       >
-        <h1 className="hero-name">{nameText}</h1>
-        <p
-          className="hero-subtitle"
-          style={{ opacity: subtitleVisible ? 1 : 0 }}
+        {/* LHS: Hero Text occupying exactly 70vw */}
+        <div
+          className="hero-text"
+          style={{ 
+            width: '70vw', 
+            opacity: 1, 
+            zIndex: 2, 
+            pointerEvents: 'none',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+            paddingLeft: '8vw' 
+          }}
         >
-          Computer Engineer · Builder
-        </p>
+          {/* Line 1: Name — appears instantly, no typing animation */}
+          <h1 className="hero-name" style={{ whiteSpace: 'nowrap' }}>
+            D E B A S H R E E &nbsp; M A L
+          </h1>
+
+          {/* Line 2: Taglines — smaller, loops fast with quick delete */}
+          {/* Line 2: Build [RotatingText] animation */}
+          <div 
+            className="hero-tagline" 
+            style={{ 
+              opacity: 1,
+              marginTop: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              overflow: 'hidden',
+            }}
+          >
+            <span style={{ color: 'white', fontWeight: 500, fontStyle: 'italic' }}>Build</span>
+            <RotatingText
+              texts={['Ideas', 'Logic', 'Systems', 'Scale']}
+              staggerFrom="last"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '-120%' }}
+              staggerDuration={0.04}
+              splitLevelClassName="overflow-hidden"
+              transition={{ type: 'spring', damping: 20, stiffness: 500 }}
+              rotationInterval={2000}
+              splitBy="characters"
+              auto
+              loop
+              mainClassName="hero-rotating-text"
+            />
+          </div>
+        </div>
+
+        {/* RHS: 3D Robot Native Canvas */}
+        <div 
+          className="native-3d-wrapper" 
+          onPointerEnter={() => { cursorState.isHoveringCanvas = true; }}
+          onPointerLeave={() => { cursorState.isHoveringCanvas = false; }}
+          style={{ 
+            width: '30vw', 
+            height: '80vh',
+            transform: 'translateX(-4vw)', // Shift the entire grid element slightly left
+            pointerEvents: 'auto',
+            position: 'relative'
+          }}
+        >
+          {/* React Three Fiber Canvas engine replaces Sketchfab completely */}
+          {/* By floating the physical 3D camera upwards to Y=2.5, we perfectly frame the upper chest natively */}
+          <Canvas camera={{ position: [0, 2.5, 4.5], fov: 45 }}>
+            {/* Professional studio lighting setup */}
+            <ambientLight intensity={0.6} />
+            <spotLight position={[10, 10, 10]} intensity={1.5} angle={0.15} penumbra={1} />
+            <Environment preset="city" />
+            
+            {/* INJECTED CONTROL: This single line grants you the power to click, drag, spin, and scroll-wheel zoom! */}
+            {/* Added maxPolarAngle constraint so you can't accidentally drag the camera 'underground' violently */}
+            <OrbitControls 
+              enableZoom={true} 
+              enablePan={true} 
+              makeDefault 
+              target={[0, 2.5, 0]} 
+              maxPolarAngle={Math.PI / 1.5}
+            />
+
+            <Suspense fallback={null}>
+              <RobotModel />
+            </Suspense>
+          </Canvas>
+        </div>
       </div>
     </>
   );
