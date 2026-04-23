@@ -4,16 +4,35 @@ import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from
 import type { SpringOptions, MotionValue } from 'motion/react';
 import React, { Children, cloneElement, useEffect, useMemo, useRef, useState } from 'react';
 import type { PanelType, DockProps } from '../types';
-import { 
-  FiUser, 
-  FiFolder, 
-  FiSettings, 
-  FiTerminal, 
-  FiFileText, 
-  FiMail 
-} from 'react-icons/fi';
-
 import './Dock.css';
+
+// Generic Lord Icon wrapper for the dock
+function DockLordIcon({ src, trigger, stroke, state, delay, colors }: {
+  src: string;
+  trigger: string;
+  stroke?: string;
+  state?: string;
+  delay?: string;
+  colors?: string;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current && !containerRef.current.querySelector('lord-icon')) {
+      const lordIcon = document.createElement('lord-icon');
+      lordIcon.setAttribute('src', src);
+      lordIcon.setAttribute('trigger', trigger);
+      if (stroke) lordIcon.setAttribute('stroke', stroke);
+      if (state) lordIcon.setAttribute('state', state);
+      if (delay) lordIcon.setAttribute('delay', delay);
+      lordIcon.setAttribute('colors', colors || 'primary:#ffffff,secondary:#e4e4e4');
+      lordIcon.setAttribute('style', 'width:28px;height:28px');
+      containerRef.current.appendChild(lordIcon);
+    }
+  }, []);
+
+  return <div ref={containerRef} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} />;
+}
 
 interface DockItemProps {
   children: React.ReactNode;
@@ -138,12 +157,12 @@ interface Item {
 }
 
 const ITEMS: Item[] = [
-  { id: 'about', icon: <FiUser size={24} />, label: 'About' },
-  { id: 'projects', icon: <FiFolder size={24} />, label: 'Projects' },
-  { id: 'skills', icon: <FiSettings size={24} />, label: 'Skills' },
-  { id: 'terminal', icon: <FiTerminal size={24} />, label: 'Terminal' },
-  { id: 'resume', icon: <FiFileText size={24} />, label: 'Resume' },
-  { id: 'contact', icon: <FiMail size={24} />, label: 'Contact' },
+  { id: 'about', icon: <DockLordIcon src="https://cdn.lordicon.com/lhjjdftm.json" trigger="loop" delay="1500" stroke="bold" state="in-reveal" />, label: 'About' },
+  { id: 'projects', icon: <DockLordIcon src="https://cdn.lordicon.com/tsrgicte.json" trigger="loop" delay="2000" stroke="bold" />, label: 'Projects' },
+  { id: 'skills', icon: <DockLordIcon src="https://cdn.lordicon.com/nfuackpv.json" trigger="loop" delay="2500" stroke="bold" state="loop-spin" />, label: 'Skills' },
+  { id: 'terminal', icon: <DockLordIcon src="https://cdn.lordicon.com/ailnzwyn.json" trigger="loop" delay="3000" stroke="bold" state="in-reveal" />, label: 'Terminal' },
+  { id: 'resume', icon: <DockLordIcon src="https://cdn.lordicon.com/hmpomorl.json" trigger="loop" delay="3500" stroke="bold" />, label: 'Resume' },
+  { id: 'contact', icon: <DockLordIcon src="https://cdn.lordicon.com/vpbspaec.json" trigger="loop" delay="4000" stroke="bold" state="in-unfold" />, label: 'Contact' },
 ];
 
 export default function Dock({
