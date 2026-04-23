@@ -1,8 +1,7 @@
-import { useEffect, useState, useRef, Suspense } from 'react';
+import { useEffect, useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Environment, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
-import TextType from './TextType';
 import RotatingText from './RotatingText';
 
 // Global variable strictly for buttery 60fps tracking without causing React to stutter
