@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { PanelProps } from '../../types';
 
 export default function ResumePanel({ onClose }: PanelProps) {

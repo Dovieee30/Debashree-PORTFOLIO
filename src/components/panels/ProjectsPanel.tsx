@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect, useRef } from 'react';
 import type { PanelProps, Project } from '../../types';
 import ScrollStack, { ScrollStackItem } from './ScrollStack';

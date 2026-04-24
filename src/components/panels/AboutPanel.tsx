@@ -19,11 +19,10 @@ const itemVariants = {
   show: { 
     opacity: 1, 
     y: 0, 
-    transition: { type: "spring", stiffness: 300, damping: 24 } 
+    transition: { type: "spring" as const, stiffness: 300, damping: 24 } 
   }
 };
 
-const tags = ['React', 'Node.js', 'AI/ML', 'Android', 'PostgreSQL', 'Supabase', 'Groq', 'Firebase'];
 const stats = [
   { num: '9.48', label: 'SGPA' },
   { num: '3+', label: 'Hackathons' },

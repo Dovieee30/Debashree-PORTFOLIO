@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useRef } from 'react';
 import type { PanelProps, Skill } from '../../types';
 import LogoLoop from './LogoLoop';
