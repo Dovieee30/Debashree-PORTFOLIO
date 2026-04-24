@@ -1,39 +1,119 @@
 import type { PanelProps } from '../../types';
+import { motion } from 'motion/react';
+import TiltedCard from './TiltedCard';
+import profileAvatar from '../../assets/profileimage.avif';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
+  show: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { type: "spring", stiffness: 300, damping: 24 } 
+  }
+};
+
+const tags = ['React', 'Node.js', 'AI/ML', 'Android', 'PostgreSQL', 'Supabase', 'Groq', 'Firebase'];
+const stats = [
+  { num: '9.48', label: 'SGPA' },
+  { num: '3+', label: 'Hackathons' },
+  { num: '1', label: 'Live Product' },
+  { num: '2nd', label: 'Year' },
+];
 
 export default function AboutPanel({ onClose }: PanelProps) {
   return (
-    <div className="panel panel-open">
+    <div className="panel panel-open" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <div className="panel-traffic">
         <div className="traffic-dot traffic-red" onClick={onClose} />
         <div className="traffic-dot traffic-yellow" />
         <div className="traffic-dot traffic-green" />
       </div>
-      <div className="panel-body">
-        <div className="about-header">
-          <div className="about-avatar">D</div>
-          <div className="about-info">
-            <div className="about-name">Debashree Mal</div>
-            <div className="about-role">Computer Engineering · 2nd Year</div>
+
+      <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '22px', fontWeight: 800, color: '#ffffff', letterSpacing: '0.08em', padding: '16px 24px 0 24px', margin: 0 }}>
+        PROFILE
+      </h2>
+
+      <motion.div 
+        className="panel-body"
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        style={{ display: 'grid', gridTemplateColumns: '6fr 4fr', gap: '48px', alignItems: 'center', padding: '32px 48px', overflowY: 'auto', flex: 1, width: '100%' }}
+      >
+        {/* LHS: TiltedCard */}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
+          <TiltedCard
+            imageSrc={profileAvatar}
+            altText="Debashree Mal Avatar"
+            captionText="DEBASHREE MAL"
+            containerHeight="360px"
+            containerWidth="90%"
+            imageHeight="100%"
+            imageWidth="100%"
+            rotateAmplitude={12}
+            scaleOnHover={1.05}
+            showMobileWarning={false}
+            showTooltip={true}
+            displayOverlayContent={false}
+          />
+        </div>
+
+        {/* RHS: Details */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
+          <div className="about-header-text" style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: 0 }}>
+            <motion.h1 variants={itemVariants} style={{ margin: 0, color: '#fff', fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '32px' }}>
+              DEBASHREE MAL
+            </motion.h1>
+            <motion.p variants={itemVariants} style={{ margin: 0, color: '#94a3b8', fontFamily: "'JetBrains Mono', monospace", fontSize: '14px', fontWeight: 600 }}>
+              Computer Engineering · 2nd Year
+            </motion.p>
           </div>
+
+          <div className="about-info" style={{ marginTop: 0 }}>
+            <motion.div variants={itemVariants} className="about-role" style={{ fontSize: '20px', color: '#94a3b8', fontWeight: 600 }}>
+              About Me
+            </motion.div>
+          </div>
+          <motion.p variants={itemVariants} className="about-bio" style={{ fontSize: '18px', lineHeight: '1.6', color: '#e2e8f0' }}>
+            Turning India's overlooked gaps into AI-powered products — driven by software, design, and the obsession to build what's missing.
+          </motion.p>
+
+          <motion.div variants={itemVariants} className="about-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginTop: '16px' }}>
+            {stats.map((stat) => (
+              <motion.div 
+                key={stat.label} 
+                className="about-stat"
+                whileHover={{ scale: 1.02 }}
+                style={{
+                  padding: '20px',
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.05)',
+                  borderRadius: '16px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <div className="stat-num" style={{ fontSize: '32px', fontWeight: 'bold', color: '#fff' }}>{stat.num}</div>
+                <div className="stat-label" style={{ fontSize: '14px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '4px' }}>{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
-        <p className="about-bio">Builder of AI-powered products for underserved Indian markets.</p>
-        <div className="about-tags">
-          <span className="about-tag">React</span>
-          <span className="about-tag">Node.js</span>
-          <span className="about-tag">AI/ML</span>
-          <span className="about-tag">Android</span>
-          <span className="about-tag">PostgreSQL</span>
-          <span className="about-tag">Supabase</span>
-          <span className="about-tag">Groq</span>
-          <span className="about-tag">Firebase</span>
-        </div>
-        <div className="about-stats">
-          <div className="about-stat"><div className="stat-num">9.48</div><div className="stat-label">SGPA</div></div>
-          <div className="about-stat"><div className="stat-num">3+</div><div className="stat-label">Hackathons</div></div>
-          <div className="about-stat"><div className="stat-num">1</div><div className="stat-label">Live Product</div></div>
-          <div className="about-stat"><div className="stat-num">2nd</div><div className="stat-label">Year</div></div>
-        </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
+

@@ -7,13 +7,14 @@ import type { PanelType, DockProps } from '../types';
 import './Dock.css';
 
 // Generic Lord Icon wrapper for the dock
-function DockLordIcon({ src, trigger, stroke, state, delay, colors }: {
+function DockLordIcon({ src, trigger, stroke, state, delay, colors, paused }: {
   src: string;
   trigger: string;
   stroke?: string;
   state?: string;
   delay?: string;
   colors?: string;
+  paused?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -30,6 +31,17 @@ function DockLordIcon({ src, trigger, stroke, state, delay, colors }: {
       containerRef.current.appendChild(lordIcon);
     }
   }, []);
+
+  // Pause/resume animation based on paused prop
+  useEffect(() => {
+    const icon = containerRef.current?.querySelector('lord-icon');
+    if (!icon) return;
+    if (paused) {
+      icon.setAttribute('trigger', 'hover');
+    } else {
+      icon.setAttribute('trigger', trigger);
+    }
+  }, [paused, trigger]);
 
   return <div ref={containerRef} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} />;
 }
@@ -49,6 +61,7 @@ interface DockItemProps {
 function DockItem({ children, className = '', onClick, mouseX, spring, distance, magnification, baseItemSize, isActive }: DockItemProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isHovered = useMotionValue(0);
+  const [ripples, setRipples] = useState<number[]>([]);
 
   const mouseDistance = useTransform(mouseX, val => {
     const rect = ref.current?.getBoundingClientRect() ?? {
@@ -61,19 +74,26 @@ function DockItem({ children, className = '', onClick, mouseX, spring, distance,
   const targetSize = useTransform(mouseDistance, [-distance, 0, distance], [baseItemSize, magnification, baseItemSize]);
   const size = useSpring(targetSize, spring);
 
+  const handleClick = (e: React.MouseEvent) => {
+    setRipples(prev => [...prev, Date.now()]);
+    if (onClick) onClick();
+  };
+
   return (
     <div className="dock-item-wrapper">
       <motion.div
         ref={ref}
         style={{
           width: size,
-          height: size
+          height: size,
+          position: 'relative'
         }}
         onHoverStart={() => isHovered.set(1)}
         onHoverEnd={() => isHovered.set(0)}
         onFocus={() => isHovered.set(1)}
         onBlur={() => isHovered.set(0)}
-        onClick={onClick}
+        onClick={handleClick}
+        whileTap={{ scale: 0.95 }}
         className={`dock-item ${className}`}
         data-active={isActive ? "true" : "false"}
         tabIndex={0}
@@ -86,6 +106,32 @@ function DockItem({ children, className = '', onClick, mouseX, spring, distance,
           }
           return child;
         })}
+        <AnimatePresence>
+          {ripples.map(id => (
+            <motion.div
+              key={id}
+              initial={{ scale: 0.5, opacity: 1 }}
+              animate={{ scale: 2.2, opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              onAnimationComplete={() => setRipples(prev => prev.filter(r => r !== id))}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                width: '100%',
+                height: '100%',
+                x: '-50%',
+                y: '-50%',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(150, 180, 160, 0.3)',
+                boxShadow: '0 0 15px 5px rgba(150, 180, 160, 0.8), 0 0 40px 15px rgba(150, 180, 160, 0.4)',
+                pointerEvents: 'none',
+                zIndex: 99,
+              }}
+            />
+          ))}
+        </AnimatePresence>
       </motion.div>
       
       {/* macOS style active indicator dot */}
@@ -161,8 +207,7 @@ const ITEMS: Item[] = [
   { id: 'projects', icon: <DockLordIcon src="https://cdn.lordicon.com/tsrgicte.json" trigger="loop" delay="200" stroke="bold" />, label: 'Projects' },
   { id: 'skills', icon: <DockLordIcon src="https://cdn.lordicon.com/nfuackpv.json" trigger="loop" delay="300" stroke="bold" state="loop-spin" />, label: 'Skills' },
   { id: 'terminal', icon: <DockLordIcon src="https://cdn.lordicon.com/ailnzwyn.json" trigger="loop" delay="400" stroke="bold" state="in-reveal" />, label: 'Terminal' },
-  { id: 'resume', icon: <DockLordIcon src="https://cdn.lordicon.com/hmpomorl.json" trigger="loop" delay="500" stroke="bold" />, label: 'Resume' },
-  { id: 'contact', icon: <DockLordIcon src="https://cdn.lordicon.com/vpbspaec.json" trigger="loop" delay="600" stroke="bold" state="in-unfold" />, label: 'Contact' },
+  { id: 'contact', icon: <DockLordIcon src="https://cdn.lordicon.com/vpbspaec.json" trigger="loop" delay="500" stroke="bold" state="in-unfold" />, label: 'Contact' },
 ];
 
 export default function Dock({
@@ -218,7 +263,11 @@ export default function Dock({
               baseItemSize={baseItemSize}
               isActive={activePanel === item.id}
             >
-              <DockIcon>{item.icon}</DockIcon>
+              <DockIcon>
+                {React.isValidElement(item.icon) 
+                  ? cloneElement(item.icon as React.ReactElement, { paused: !!activePanel }) 
+                  : item.icon}
+              </DockIcon>
               <DockLabel>{item.label}</DockLabel>
             </DockItem>
           </React.Fragment>
