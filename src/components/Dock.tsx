@@ -157,12 +157,12 @@ interface Item {
 }
 
 const ITEMS: Item[] = [
-  { id: 'about', icon: <DockLordIcon src="https://cdn.lordicon.com/lhjjdftm.json" trigger="loop" delay="1500" stroke="bold" state="in-reveal" />, label: 'About' },
-  { id: 'projects', icon: <DockLordIcon src="https://cdn.lordicon.com/tsrgicte.json" trigger="loop" delay="2000" stroke="bold" />, label: 'Projects' },
-  { id: 'skills', icon: <DockLordIcon src="https://cdn.lordicon.com/nfuackpv.json" trigger="loop" delay="2500" stroke="bold" state="loop-spin" />, label: 'Skills' },
-  { id: 'terminal', icon: <DockLordIcon src="https://cdn.lordicon.com/ailnzwyn.json" trigger="loop" delay="3000" stroke="bold" state="in-reveal" />, label: 'Terminal' },
-  { id: 'resume', icon: <DockLordIcon src="https://cdn.lordicon.com/hmpomorl.json" trigger="loop" delay="3500" stroke="bold" />, label: 'Resume' },
-  { id: 'contact', icon: <DockLordIcon src="https://cdn.lordicon.com/vpbspaec.json" trigger="loop" delay="4000" stroke="bold" state="in-unfold" />, label: 'Contact' },
+  { id: 'about', icon: <DockLordIcon src="https://cdn.lordicon.com/lhjjdftm.json" trigger="loop" delay="100" stroke="bold" state="in-reveal" />, label: 'About' },
+  { id: 'projects', icon: <DockLordIcon src="https://cdn.lordicon.com/tsrgicte.json" trigger="loop" delay="200" stroke="bold" />, label: 'Projects' },
+  { id: 'skills', icon: <DockLordIcon src="https://cdn.lordicon.com/nfuackpv.json" trigger="loop" delay="300" stroke="bold" state="loop-spin" />, label: 'Skills' },
+  { id: 'terminal', icon: <DockLordIcon src="https://cdn.lordicon.com/ailnzwyn.json" trigger="loop" delay="400" stroke="bold" state="in-reveal" />, label: 'Terminal' },
+  { id: 'resume', icon: <DockLordIcon src="https://cdn.lordicon.com/hmpomorl.json" trigger="loop" delay="500" stroke="bold" />, label: 'Resume' },
+  { id: 'contact', icon: <DockLordIcon src="https://cdn.lordicon.com/vpbspaec.json" trigger="loop" delay="600" stroke="bold" state="in-unfold" />, label: 'Contact' },
 ];
 
 export default function Dock({

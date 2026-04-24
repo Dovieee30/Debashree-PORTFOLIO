@@ -19,13 +19,9 @@ export default function MenuBar({ visible }: { visible: boolean }) {
   return (
     <nav className={`menubar ${visible ? 'menubar-visible' : ''}`}>
       <div className="menubar-left">
-        <span className="logo-emoji">🤖</span>
-        <span className="name">Debashree Mal</span>
       </div>
       <div className="menubar-right">
         <span className="item">⚡ SGPA 9.48</span>
-        <span className="divider"></span>
-        <span className="item">🟢 PLUTO: Live</span>
         <span className="divider"></span>
         <span className="item clock">{time}</span>
       </div>
