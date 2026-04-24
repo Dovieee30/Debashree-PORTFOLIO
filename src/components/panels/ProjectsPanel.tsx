@@ -44,14 +44,8 @@ export default function ProjectsPanel({ onClose }: PanelProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let rafId: number;
-    let isHovering = false;
-    
     const scroller = containerRef.current?.querySelector('.scroll-stack-scroller') as HTMLElement;
     if (!scroller) return;
-
-    scroller.addEventListener('mouseenter', () => isHovering = true);
-    scroller.addEventListener('mouseleave', () => isHovering = false);
 
     const handleScroll = () => {
       if (scroller.scrollTop > 50) {
@@ -61,16 +55,7 @@ export default function ProjectsPanel({ onClose }: PanelProps) {
     };
     scroller.addEventListener('scroll', handleScroll);
 
-    const scrollStep = () => {
-      if (!isHovering) {
-        scroller.scrollTop += 0.5;
-      }
-      rafId = requestAnimationFrame(scrollStep);
-    };
-    rafId = requestAnimationFrame(scrollStep);
-
     return () => {
-      cancelAnimationFrame(rafId);
       scroller.removeEventListener('scroll', handleScroll);
     };
   }, []);

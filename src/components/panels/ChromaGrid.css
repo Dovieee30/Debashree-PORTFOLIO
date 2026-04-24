@@ -90,6 +90,15 @@
   display: block;
 }
 
+.chroma-img-wrapper lord-icon {
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.chroma-card:hover .chroma-img-wrapper lord-icon {
+  filter: grayscale(0%);
+}
+
 .chroma-info {
   position: relative;
   z-index: 1;
