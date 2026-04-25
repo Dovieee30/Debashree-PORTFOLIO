@@ -21,7 +21,7 @@ export default function MenuBar({ visible }: { visible: boolean }) {
       <div className="menubar-left">
       </div>
       <div className="menubar-right">
-        <span className="item">⚡ SGPA 9.48</span>
+        <span className="item">🟢 Open to Work</span>
         <span className="divider"></span>
         <span className="item clock">{time}</span>
       </div>
