@@ -79,11 +79,7 @@ export default function AboutPanel({ onClose }: PanelProps) {
             </motion.p>
           </div>
 
-          <div className="about-info" style={{ marginTop: 0 }}>
-            <motion.div variants={itemVariants} className="about-role" style={{ fontSize: '20px', color: '#94a3b8', fontWeight: 600 }}>
-              About Me
-            </motion.div>
-          </div>
+
           <motion.p variants={itemVariants} className="about-bio" style={{ fontSize: '18px', lineHeight: '1.6', color: '#e2e8f0' }}>
             Turning India's overlooked gaps into AI-powered products — driven by software, design, and the obsession to build what's missing.
           </motion.p>
@@ -93,7 +89,12 @@ export default function AboutPanel({ onClose }: PanelProps) {
               <motion.div 
                 key={stat.label} 
                 className="about-stat"
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ 
+                  scale: 1.04, 
+                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                  borderColor: 'rgba(255, 255, 255, 0.15)'
+                }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 style={{
                   padding: '20px',
                   background: 'rgba(255,255,255,0.03)',
@@ -102,11 +103,12 @@ export default function AboutPanel({ onClose }: PanelProps) {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  cursor: 'pointer'
                 }}
               >
-                <div className="stat-num" style={{ fontSize: '32px', fontWeight: 'bold', color: '#fff' }}>{stat.num}</div>
-                <div className="stat-label" style={{ fontSize: '14px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '4px' }}>{stat.label}</div>
+                <div className="stat-num" style={{ fontSize: '32px', fontWeight: 'bold', color: '#cbd5e1' }}>{stat.num}</div>
+                <div className="stat-label" style={{ fontSize: '14px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '4px' }}>{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>

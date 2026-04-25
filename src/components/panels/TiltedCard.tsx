@@ -104,6 +104,8 @@ export default function TiltedCard({
           src={imageSrc}
           alt={altText}
           className="tilted-card-img"
+          loading="eager"
+          fetchPriority="high"
           style={{
             width: imageWidth,
             height: imageHeight
