@@ -25,10 +25,10 @@ export default function ContactPanel({ onClose }: PanelProps) {
       // @ts-ignore
       icon: <lord-icon src="https://cdn.lordicon.com/lllcnxva.json" trigger="hover" stroke="bold" colors="primary:#ffffff,secondary:#00c8ff,tertiary:#7c3aed" style={{width: '150px', height: '150px'}}></lord-icon>,
       title: "GitHub",
-      handle: "github.com/Dovieee30",
+      handle: "github.com/dovieee",
       borderColor: "#e2e8f0",
       gradient: "linear-gradient(145deg, rgba(226, 232, 240, 0.05), #000)",
-      url: "https://github.com/Dovieee30"
+      url: "https://github.com/dovieee"
     }
   ];
 
