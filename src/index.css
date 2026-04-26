@@ -106,7 +106,7 @@ body {
   text-align: left;
   z-index: 2;
   pointer-events: none;
-  opacity: 0;
+  opacity: 1;
 }
 
 .hero-name {
@@ -115,9 +115,10 @@ body {
   font-weight: 800;
   color: white;
   text-shadow: none;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.45em;
   min-height: 1.2em;
-  white-space: pre-wrap;
+  white-space: nowrap;
+  transition: none !important;
 }
 
 .hero-subtitle {

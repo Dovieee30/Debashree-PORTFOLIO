@@ -118,7 +118,6 @@ export default function Robot({ onReady }: { onReady: () => void }) {
           className="hero-text"
           style={{ 
             width: '70vw', 
-            opacity: 1, 
             zIndex: 2, 
             pointerEvents: 'none',
             display: 'flex',
@@ -129,8 +128,8 @@ export default function Robot({ onReady }: { onReady: () => void }) {
           }}
         >
           {/* Line 1: Name — appears instantly, no typing animation */}
-          <h1 className="hero-name" style={{ whiteSpace: 'nowrap' }}>
-            D E B A S H R E E &nbsp; M A L
+          <h1 className="hero-name">
+            DEBASHREE MAL
           </h1>
 
           {/* Line 2: Taglines — smaller, loops fast with quick delete */}
