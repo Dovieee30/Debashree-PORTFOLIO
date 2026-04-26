@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import Lenis from 'lenis';
 import MenuBar from './components/MenuBar';
 import Robot from './components/Robot';
 import Dock from './components/Dock';
@@ -20,6 +21,32 @@ export default function App() {
   };
 
   const closePanel = () => setActivePanel(null);
+
+  // Initialize Lenis smooth scroll
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   // Escape key closes active panel
   useEffect(() => {

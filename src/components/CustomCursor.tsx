@@ -19,10 +19,9 @@ export default function CustomCursor() {
 
     let raf: number;
     const animate = () => {
-      // Single ring snaps directly to cursor — clean, instant, Apple-like
+      // Use translate3d for hardware acceleration and buttery smoothness
       if (ringRef.current) {
-        ringRef.current.style.left = mousePos.current.x + 'px';
-        ringRef.current.style.top = mousePos.current.y + 'px';
+        ringRef.current.style.transform = `translate3d(${mousePos.current.x}px, ${mousePos.current.y}px, 0) translate(-50%, -50%)`;
       }
       raf = requestAnimationFrame(animate);
     };
