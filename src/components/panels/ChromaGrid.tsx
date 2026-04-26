@@ -128,7 +128,6 @@ export const ChromaGrid: React.FC<ChromaGridProps> = ({
           <footer className="chroma-info">
             <h3 className="name">{c.title}</h3>
             {c.handle && <span className="handle">{c.handle}</span>}
-            <p className="visit-link">Visit Link ↗</p>
           </footer>
         </article>
       ))}

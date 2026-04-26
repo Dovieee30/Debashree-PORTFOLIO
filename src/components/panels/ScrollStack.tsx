@@ -20,7 +20,8 @@ const ScrollStack = ({
   rotationAmount = 0,
   blurAmount = 0,
   useWindowScroll = false,
-  onStackComplete
+  onStackComplete,
+  onActiveIndexChange
 }) => {
   const scrollerRef = useRef(null);
   const stackCompletedRef = useRef(false);
@@ -29,6 +30,7 @@ const ScrollStack = ({
   const cardsRef = useRef([]);
   const lastTransformsRef = useRef(new Map());
   const isUpdatingRef = useRef(false);
+  const activeIndexRef = useRef(0);
 
   const calculateProgress = useCallback((scrollTop, start, end) => {
     if (scrollTop < start) return 0;
@@ -80,6 +82,21 @@ const ScrollStack = ({
     const { scrollTop, containerHeight } = getScrollData();
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
+
+    let topCardIndex = 0;
+    for (let j = 0; j < cardsRef.current.length; j++) {
+      if (!cardsRef.current[j]) continue;
+      const jCardTop = getElementOffset(cardsRef.current[j]);
+      const jTriggerStart = jCardTop - stackPositionPx - itemStackDistance * j;
+      if (scrollTop >= jTriggerStart) {
+        topCardIndex = j;
+      }
+    }
+    
+    if (topCardIndex !== activeIndexRef.current) {
+      activeIndexRef.current = topCardIndex;
+      onActiveIndexChange?.(topCardIndex);
+    }
 
     const endElement = useWindowScroll
       ? document.querySelector('.scroll-stack-end')

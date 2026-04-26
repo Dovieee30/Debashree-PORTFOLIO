@@ -24,10 +24,8 @@ const itemVariants = {
 };
 
 const stats = [
-  { num: '9.48', label: 'SGPA' },
+  { num: '9.72', label: 'SGPA' },
   { num: '3+', label: 'Hackathons' },
-  { num: '1', label: 'Live Product' },
-  { num: '2nd', label: 'Year' },
 ];
 
 export default function AboutPanel({ onClose }: PanelProps) {
@@ -39,7 +37,7 @@ export default function AboutPanel({ onClose }: PanelProps) {
         <div className="traffic-dot traffic-green" />
       </div>
 
-      <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '22px', fontWeight: 800, color: '#ffffff', letterSpacing: '0.08em', padding: '16px 24px 0 24px', margin: 0 }}>
+      <h2 style={{ fontFamily: "'Inter', sans-serif", fontSize: '22px', fontWeight: 700, color: '#ffffff', letterSpacing: 'normal', padding: '16px 24px 0 24px', margin: 0 }}>
         PROFILE
       </h2>
 
@@ -71,11 +69,11 @@ export default function AboutPanel({ onClose }: PanelProps) {
         {/* RHS: Details */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
           <div className="about-header-text" style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: 0 }}>
-            <motion.h1 variants={itemVariants} style={{ margin: 0, color: '#fff', fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: '32px' }}>
+            <motion.h1 variants={itemVariants} style={{ margin: 0, color: '#fff', fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: '32px' }}>
               DEBASHREE MAL
             </motion.h1>
-            <motion.p variants={itemVariants} style={{ margin: 0, color: '#94a3b8', fontFamily: "'JetBrains Mono', monospace", fontSize: '14px', fontWeight: 600 }}>
-              Computer Engineering · 2nd Year
+            <motion.p variants={itemVariants} style={{ margin: 0, color: '#94a3b8', fontFamily: "'Inter', sans-serif", fontSize: '14px', fontWeight: 600 }}>
+              Computer Engineering
             </motion.p>
           </div>
 

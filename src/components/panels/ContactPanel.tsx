@@ -7,28 +7,28 @@ export default function ContactPanel({ onClose }: PanelProps) {
       // @ts-ignore
       icon: <lord-icon src="https://cdn.lordicon.com/gtvaxhwv.json" trigger="hover" stroke="bold" colors="primary:#ffffff,secondary:#00c8ff,tertiary:#7c3aed,quaternary:#e2e8f0" style={{width: '150px', height: '150px'}}></lord-icon>,
       title: "Email",
-      handle: "debashreemal@email.com",
+      handle: "debashreee87@gmail.com",
       borderColor: "#00c8ff",
       gradient: "linear-gradient(145deg, rgba(0, 200, 255, 0.05), #000)",
-      url: "mailto:debashreemal@email.com"
+      url: "mailto:debashreee87@gmail.com"
     },
     {
       // @ts-ignore
       icon: <lord-icon src="https://cdn.lordicon.com/xerxcacw.json" trigger="hover" stroke="bold" state="morph-alone" colors="primary:#ffffff,secondary:#00c8ff" style={{width: '150px', height: '150px'}}></lord-icon>,
       title: "LinkedIn",
-      handle: "linkedin.com/in/debashreemal",
+      handle: "linkedin.com/in/debashree-mal",
       borderColor: "#7c3aed",
       gradient: "linear-gradient(145deg, rgba(124, 58, 237, 0.05), #000)",
-      url: "https://linkedin.com/in/debashreemal"
+      url: "https://linkedin.com/in/debashree-mal-4a6214370"
     },
     {
       // @ts-ignore
       icon: <lord-icon src="https://cdn.lordicon.com/lllcnxva.json" trigger="hover" stroke="bold" colors="primary:#ffffff,secondary:#00c8ff,tertiary:#7c3aed" style={{width: '150px', height: '150px'}}></lord-icon>,
       title: "GitHub",
-      handle: "github.com/debashreemal",
+      handle: "github.com/dovieee",
       borderColor: "#e2e8f0",
       gradient: "linear-gradient(145deg, rgba(226, 232, 240, 0.05), #000)",
-      url: "https://github.com/debashreemal"
+      url: "https://github.com/dovieee"
     }
   ];
 
@@ -40,8 +40,8 @@ export default function ContactPanel({ onClose }: PanelProps) {
         <div className="traffic-dot traffic-green" />
       </div>
 
-      <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '22px', fontWeight: 800, color: '#ffffff', letterSpacing: '0.08em', padding: '16px 24px 0 24px', margin: 0 }}>
-        CONTACT
+      <h2 style={{ fontFamily: "'Inter', sans-serif", fontSize: '22px', fontWeight: 700, color: '#ffffff', letterSpacing: 'normal', padding: '16px 24px 0 24px', margin: 0 }}>
+        CONTACT ME
       </h2>
 
       <div className="panel-body" style={{ overflow: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '24px' }}>

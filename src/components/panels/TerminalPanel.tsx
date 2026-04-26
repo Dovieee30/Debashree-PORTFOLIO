@@ -18,10 +18,10 @@ const TERMINAL_LINES: TerminalLine[] = [
   { text: '  DE:       macOS-Inspired', color: '#94a3b8' },
   { text: '', color: 'transparent' },
   { text: 'debashree@portfolio:~$ ls ~/projects/', color: '#00c8ff', isCommand: true },
-  { text: '  PLUTO/  FlowMind/  TravelCompanion/  ZOKU/', color: '#22c55e' },
+  { text: '  PLUTO/  FlowMind/  Zwiggy/', color: '#22c55e' },
   { text: '', color: 'transparent' },
   { text: 'debashree@portfolio:~$ cat ~/.achievements', color: '#00c8ff', isCommand: true },
-  { text: '  → SGPA: 9.48', color: '#a855f7' },
+  { text: '  → SGPA: 9.72', color: '#a855f7' },
   { text: '  → Smart India Hackathon (SIH)', color: '#a855f7' },
   { text: '  → Avishkar 2026', color: '#a855f7' },
   { text: '  → 1 Live Production App (PLUTO)', color: '#a855f7' },
@@ -54,7 +54,7 @@ export default function TerminalPanel({ onClose }: PanelProps) {
       const div = document.createElement('div');
       div.className = 'terminal-line';
       div.style.whiteSpace = 'pre';
-      div.style.fontFamily = "'JetBrains Mono', monospace";
+      div.style.fontFamily = "'Inter', sans-serif";
       div.style.fontSize = '15px';
       div.style.lineHeight = '2';
 
@@ -93,10 +93,6 @@ export default function TerminalPanel({ onClose }: PanelProps) {
         <div className="traffic-dot traffic-yellow" />
         <div className="traffic-dot traffic-green" />
       </div>
-
-      <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '22px', fontWeight: 800, color: '#ffffff', letterSpacing: '0.08em', padding: '16px 24px 0 24px', margin: 0 }}>
-        TERMINAL
-      </h2>
 
       <div className="panel-body" style={{ padding: 0, flex: 1, overflow: 'hidden' }}>
         <div

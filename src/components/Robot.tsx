@@ -18,7 +18,7 @@ function CanvasLoader() {
           borderRadius: '50%', 
           animation: 'spin 1s linear infinite' 
         }}></div>
-        <span style={{ fontSize: '12px', letterSpacing: '2px', fontWeight: 600, fontFamily: "'JetBrains Mono', monospace" }}>
+        <span style={{ fontSize: '12px', letterSpacing: '2px', fontWeight: 600, fontFamily: "'Inter', sans-serif" }}>
           {progress.toFixed(0)}%
         </span>
       </div>

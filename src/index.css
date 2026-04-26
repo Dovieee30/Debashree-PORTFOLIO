@@ -25,7 +25,7 @@ body {
   height: 100%;
   overflow: hidden;
   background-color: var(--bg);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   color: var(--text);
   cursor: none;
   background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
@@ -85,7 +85,7 @@ body {
 /* ───────── RAIN / ROBOT CHARS ───────── */
 .rain-char {
   position: fixed;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   line-height: 1;
   color: var(--cyan);
@@ -207,7 +207,7 @@ body {
   gap: 0;
   font-size: 11px;
   color: #94a3b8;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
 }
 
 .menubar-right .item {
@@ -354,7 +354,7 @@ body {
   font-size: 11px;
   color: #00c8ff;
   margin-top: 3px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
 }
 
 .about-bio {
@@ -362,7 +362,7 @@ body {
   font-size: 12px;
   line-height: 1.7;
   margin-bottom: 14px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
 }
 
 .about-tags {
@@ -374,7 +374,7 @@ body {
 
 .about-tag {
   font-size: 10px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   color: #00c8ff;
   border: 1px solid rgba(0, 200, 255, 0.35);
   border-radius: 999px;
@@ -400,7 +400,7 @@ body {
   font-size: 10px;
   color: #64748b;
   margin-top: 2px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
 }
 
 /* ───────── PROJECTS PANEL ───────── */
@@ -435,14 +435,14 @@ body {
 
 .project-card-title {
   font-family: 'Syne', sans-serif;
-  font-size: 18px;
+  font-size: 28px;
   font-weight: 700;
   color: #fff;
 }
 
 .project-card-tag {
   font-size: 11px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   padding: 4px 10px;
   border-radius: 999px;
   white-space: nowrap;
@@ -453,13 +453,13 @@ body {
   color: #e2e8f0;
   line-height: 1.7;
   margin-bottom: 12px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
 }
 
 .project-card-stack {
   font-size: 12px;
   color: #cbd5e1;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   margin-bottom: 10px;
 }
 
@@ -468,7 +468,7 @@ body {
   align-items: center;
   gap: 4px;
   font-size: 10px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   text-decoration: none;
   border-radius: 6px;
   padding: 3px 8px;
@@ -486,11 +486,11 @@ body {
 }
 
 .skills-table thead th {
-  font-size: 9px;
+  font-size: 11px;
   color: #475569;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-weight: 600;
   padding: 0 0 8px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -515,15 +515,15 @@ body {
 
 .skills-table tbody td {
   padding: 7px 0;
-  font-size: 11px;
-  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
   color: #cbd5e1;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .skills-table tbody td:nth-child(3) {
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   color: #22c55e;
 }
@@ -556,7 +556,7 @@ body {
   padding: 2px 8px;
   border-radius: 999px;
   white-space: nowrap;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
 }
 
 .skills-footer {
@@ -564,7 +564,7 @@ body {
   color: #475569;
   text-align: center;
   margin-top: 12px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
 }
 
 /* ───────── TERMINAL PANEL ───────── */
@@ -573,7 +573,7 @@ body {
   border-radius: 8px;
   padding: 16px;
   min-height: 200px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-size: 12px;
   line-height: 1.9;
 }
@@ -612,7 +612,7 @@ body {
 .resume-subtitle {
   font-size: 11px;
   color: #64748b;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   margin-top: 4px;
 }
 
@@ -625,7 +625,7 @@ body {
 .resume-info-row {
   font-size: 12px;
   color: #94a3b8;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   line-height: 2;
 }
 
@@ -639,7 +639,7 @@ body {
   border: none;
   border-radius: 8px;
   font-size: 13px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   font-weight: 600;
   cursor: pointer;
   text-align: center;
@@ -656,7 +656,7 @@ body {
   color: #475569;
   margin-top: 8px;
   text-align: center;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
 }
 
 /* ───────── CONTACT PANEL ───────── */
@@ -670,7 +670,7 @@ body {
 .contact-subtitle {
   font-size: 11px;
   color: #64748b;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   margin-top: 4px;
 }
 
@@ -685,7 +685,7 @@ body {
   padding: 10px 12px;
   border-radius: 8px;
   font-size: 12px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
   color: #94a3b8;
   text-decoration: none;
   transition: all 0.15s ease;
@@ -702,7 +702,7 @@ body {
   color: #475569;
   text-align: center;
   margin-top: 14px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', sans-serif;
 }
 
 /* ───────── MOBILE RESPONSIVE ───────── */
@@ -747,14 +747,4 @@ body {
 }
 @keyframes bounce { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } }
 
-/* ───────── INTER FONT (closest to macOS SF Pro) ───────── */
-/* Inter is free, Google-hosted, and shares the exact same geometric design philosophy as Apple's SF Pro */
-* {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-}
-
-/* On Apple devices, still natively use SF Pro if available */
-@supports (font: -apple-system-body) {
-  * { font-family: -apple-system, 'Inter', sans-serif !important; }
-}
 *, *::before, *::after { transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; }

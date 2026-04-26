@@ -75,7 +75,7 @@ export default function SkillsPanel({ onClose }: PanelProps) {
         <div className="traffic-dot traffic-green" />
       </div>
 
-      <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '22px', fontWeight: 800, color: '#ffffff', letterSpacing: '0.08em', padding: '16px 24px 0 24px', margin: 0 }}>
+      <h2 style={{ fontFamily: "'Inter', sans-serif", fontSize: '22px', fontWeight: 700, color: '#ffffff', letterSpacing: 'normal', padding: '16px 24px 0 24px', margin: 0 }}>
         MY SKILLS
       </h2>
 
@@ -118,7 +118,7 @@ export default function SkillsPanel({ onClose }: PanelProps) {
             textTransform: 'uppercase', 
             letterSpacing: '0.1em', 
             marginBottom: '14px', 
-            fontFamily: "'JetBrains Mono', monospace",
+            fontFamily: "'Inter', sans-serif",
             textAlign: 'center'
           }}>
             Tech Stack · Loaded Modules
