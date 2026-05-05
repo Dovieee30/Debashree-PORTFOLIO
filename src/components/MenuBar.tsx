@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { FiClock, FiBriefcase } from 'react-icons/fi';
 
 export default function MenuBar({ visible }: { visible: boolean }) {
-  const [time, setTime] = useState('🕐 --:--');
+  const [time, setTime] = useState('--:--');
 
   useEffect(() => {
     const updateClock = () => {
@@ -9,7 +10,7 @@ export default function MenuBar({ visible }: { visible: boolean }) {
       let h = n.getHours();
       const ampm = h >= 12 ? 'PM' : 'AM';
       h = h % 12 || 12;
-      setTime(`🕐 ${String(h).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')} ${ampm}`);
+      setTime(`${String(h).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')} ${ampm}`);
     };
     updateClock();
     const t = setInterval(updateClock, 1000);
@@ -21,9 +22,15 @@ export default function MenuBar({ visible }: { visible: boolean }) {
       <div className="menubar-left">
       </div>
       <div className="menubar-right">
-        <span className="item">🟢 Open to Work</span>
+        <span className="item" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <FiBriefcase size={14} />
+          Open to Work
+        </span>
         <span className="divider"></span>
-        <span className="item clock">{time}</span>
+        <span className="item clock" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <FiClock size={14} />
+          {time}
+        </span>
       </div>
     </nav>
   );

@@ -3,6 +3,29 @@ import { useState, useEffect, useRef } from 'react';
 import type { PanelProps, Project } from '../../types';
 import CircularGallery, { CircularGalleryItem } from './CircularGallery';
 import CardSwap, { Card } from './CardSwap';
+const TechLogos: Record<string, string> = {
+  'React': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg',
+  'Next.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg',
+  'Node.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg',
+  'Supabase': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg',
+  'Groq': 'https://www.google.com/s2/favicons?sz=128&domain=groq.com',
+  'GroqAI': 'https://www.google.com/s2/favicons?sz=128&domain=groq.com',
+  'Firebase': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg',
+  'Vercel': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg',
+  'Vite': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg',
+  'Twilio': 'https://www.vectorlogo.zone/logos/twilio/twilio-icon.svg',
+  'Leaflet': 'https://www.vectorlogo.zone/logos/leafletjs/leafletjs-icon.svg',
+  'Hindsight': 'https://www.google.com/s2/favicons?sz=128&domain=usehindsight.com',
+  'PostgreSQL': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg',
+  'Android': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/android/android-original.svg',
+};
+
+const getLogo = (name: string) => {
+  const url = TechLogos[name];
+  if (!url) return <span style={{fontSize: '11px', color: '#cbd5e1', fontWeight: 600}}>{name}</span>;
+  const needInvert = name === 'Next.js' || name === 'Vercel';
+  return <img src={url} alt={name} style={{ width: 24, height: 24, objectFit: 'contain', filter: needInvert ? 'invert(1)' : 'none' }} />;
+};
 
 const PROJECTS: Project[] = [
   {
@@ -10,7 +33,7 @@ const PROJECTS: Project[] = [
     icon: '',
     tag: 'Live · Production',
     color: '#a855f7',
-    desc: 'PLUTO isn’t just an event discovery app — but inside, it’s a complete student growth ecosystem. It connects campus and inter-college opportunities, auto-builds portfolios from real participation, and enables cross-college team collaboration — all in one platform.',
+    desc: 'More than event discovery — a complete student growth ecosystem. Campus opportunities, auto-built portfolios, and cross-college collaboration. All in one platform.',
     stack: ['React', 'Next.js', 'Node.js', 'Supabase', 'Groq', 'Firebase', 'Vercel'],
     link: 'https://plutoooo.vercel.app',
     year: '2026',
@@ -27,7 +50,7 @@ const PROJECTS: Project[] = [
     icon: '',
     tag: 'App',
     color: '#f59e0b',
-    desc: 'Looks like your everyday food app — but internally powered by context-aware AI that listens, records, detects distress, and can auto-alert trusted contacts in critical moments. With a unique 3-tap safety trigger + secure PIN (5678), it instantly activates emergency support — turning a simple ordering app into a silent, always-ready safety system.',
+    desc: 'Looks like a food app. Works like a safety net. AI detects distress and auto-alerts trusted contacts. A 3-tap + PIN 5678 activates emergency support — silently, always ready.',
     stack: ['React', 'Vite', 'Twilio', 'Leaflet'],
     link: 'https://zwiggy-app.vercel.app/',
     year: '2026',
@@ -114,19 +137,19 @@ export default function ProjectsPanel({ onClose }: PanelProps) {
                     {p.year && <span style={{ color: '#64748b', fontFamily: "'Inter', sans-serif", fontSize: '12px', fontWeight: 500 }}>{p.year}</span>}
                   </div>
                   <p className="project-card-desc" style={{ fontSize: '14px', color: '#cbd5e1', lineHeight: '1.5' }}>{p.desc}</p>
-                  <div className="project-card-stack" style={{ fontSize: '13px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                  <div className="project-card-stack" style={{ fontSize: '13px', display: 'flex', flexWrap: 'wrap', gap: '14px', marginTop: '4px' }}>
                     {p.stack.map(s => (
-                      <span key={s} style={{ 
-                        padding: '5px 10px', 
-                        borderRadius: '6px', 
-                        background: 'rgba(255, 255, 255, 0.03)', 
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
-                        color: '#94a3b8', 
-                        letterSpacing: '0.03em',
-                        fontSize: '11px',
-                        fontWeight: 600 
-                      }}>
-                        {s}
+                      <span key={s} title={s} style={{ 
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'transform 0.2s ease',
+                        cursor: 'pointer'
+                      }}
+                      onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.2)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
+                      >
+                        {getLogo(s)}
                       </span>
                     ))}
                   </div>
@@ -152,7 +175,7 @@ export default function ProjectsPanel({ onClose }: PanelProps) {
                       onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'; }}
                       onClick={(e) => e.stopPropagation()}
                     >
-                      {p.link.replace('https://', '')} ↗
+                      Preview ↗
                     </a>
                   )}
                 </div>

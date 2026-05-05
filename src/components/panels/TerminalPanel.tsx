@@ -9,32 +9,32 @@ interface TerminalLine {
 }
 
 const TERMINAL_LINES: TerminalLine[] = [
-  { text: 'debashree@portfolio:~$ neofetch', color: '#00c8ff', isCommand: true },
-  { text: '  OS:       Portfolio OS v2.0', color: '#94a3b8' },
-  { text: '  Host:     Debashree Mal', color: '#e2e8f0' },
-  { text: '  Kernel:   Computer Engineering · 2nd Year', color: '#94a3b8' },
-  { text: '  Uptime:   19 years', color: '#94a3b8' },
-  { text: '  Shell:    React/TypeScript', color: '#94a3b8' },
-  { text: '  DE:       macOS-Inspired', color: '#94a3b8' },
+  { text: 'debashree@portfolio:~$ neofetch', color: '#e5e5e5', isCommand: true },
+  { text: '  OS:       Portfolio OS v2.0', color: '#9ca3af' },
+  { text: '  Host:     Debashree Mal', color: '#f3f4f6' },
+  { text: '  Kernel:   Computer Engineering · 2nd Year', color: '#9ca3af' },
+  { text: '  Shell:    React/TypeScript', color: '#9ca3af' },
+  { text: '  DE:       macOS-Inspired', color: '#9ca3af' },
   { text: '', color: 'transparent' },
-  { text: 'debashree@portfolio:~$ ls ~/projects/', color: '#00c8ff', isCommand: true },
-  { text: '  PLUTO/  FlowMind/  Zwiggy/', color: '#22c55e' },
+  { text: 'debashree@portfolio:~$ ls ~/projects/', color: '#e5e5e5', isCommand: true },
+  { text: '  PLUTO/  FlowMind/  Zwiggy/', color: '#60a5fa' },
   { text: '', color: 'transparent' },
-  { text: 'debashree@portfolio:~$ cat ~/.achievements', color: '#00c8ff', isCommand: true },
-  { text: '  → SGPA: 9.72', color: '#a855f7' },
-  { text: '  → Smart India Hackathon (SIH)', color: '#a855f7' },
-  { text: '  → Avishkar 2026', color: '#a855f7' },
-  { text: '  → 1 Live Production App (PLUTO)', color: '#a855f7' },
+  { text: 'debashree@portfolio:~$ cat ~/.achievements', color: '#e5e5e5', isCommand: true },
+  { text: '  → SGPA: 9.72', color: '#d4d4d4' },
+  { text: '  → 1 Hackathon Won - AXION', color: '#d4d4d4' },
+  { text: '  → Smart India Hackathon (SIH)', color: '#d4d4d4' },
+  { text: '  → Avishkar 2026', color: '#d4d4d4' },
+  { text: '  → 1 Live Production App (PLUTO)', color: '#d4d4d4' },
   { text: '', color: 'transparent' },
-  { text: 'debashree@portfolio:~$ echo $TECH_STACK', color: '#00c8ff', isCommand: true },
-  { text: '  React · Node.js · Groq · Supabase · Firebase · PostgreSQL · Android', color: '#f59e0b' },
+  { text: 'debashree@portfolio:~$ echo $TECH_STACK', color: '#e5e5e5', isCommand: true },
+  { text: '  React · Node.js · Groq · Supabase · Firebase · PostgreSQL · Android', color: '#d4d4d4' },
   { text: '', color: 'transparent' },
-  { text: 'debashree@portfolio:~$ ./status.sh', color: '#00c8ff', isCommand: true },
-  { text: '  [✓] Open to SDE Internships', color: '#22c55e' },
-  { text: '  [✓] Building AI for underserved Indian markets', color: '#22c55e' },
-  { text: '  [✓] Available now', color: '#22c55e' },
+  { text: 'debashree@portfolio:~$ ./status.sh', color: '#e5e5e5', isCommand: true },
+  { text: '  [✓] Open to SDE Internships', color: '#4ade80' },
+  { text: '  [✓] Building AI for underserved Indian markets', color: '#d4d4d4' },
+  { text: '  [✓] Available now', color: '#d4d4d4' },
   { text: '', color: 'transparent' },
-  { text: 'debashree@portfolio:~$ █', color: '#00c8ff', cursor: true },
+  { text: 'debashree@portfolio:~$ _', color: '#e5e5e5', cursor: true }
 ];
 
 export default function TerminalPanel({ onClose }: PanelProps) {
@@ -58,26 +58,67 @@ export default function TerminalPanel({ onClose }: PanelProps) {
       div.style.fontSize = '15px';
       div.style.lineHeight = '2';
 
-      if (line.cursor) {
-        div.innerHTML = `<span style="color:${line.color}">${line.text.replace('█', '<span class="terminal-cursor">█</span>')}</span>`;
-      } else if (line.text === '') {
-        div.style.height = '8px';
-      } else {
-        div.style.color = line.color;
-        if (line.isCommand) {
-          div.style.fontWeight = '600';
-        }
-        div.textContent = line.text;
-      }
-
-      container.appendChild(div);
       requestAnimationFrame(() => { div.classList.add('typed'); });
 
-      i++;
-      if (i < TERMINAL_LINES.length) {
-        const delay = TERMINAL_LINES[i - 1].isCommand ? 400 : 120;
-        const t = setTimeout(typeLine, delay);
-        timeouts.push(t);
+      if (line.cursor) {
+        div.innerHTML = `<span style="color:#4ade80">debashree@portfolio:~$ </span><span class="terminal-cursor" style="animation: blink-cursor 1s step-end infinite; color:#e5e5e5">_</span>`;
+        container.appendChild(div);
+        finishLine();
+      } else if (line.text === '') {
+        div.style.height = '8px';
+        container.appendChild(div);
+        finishLine();
+      } else {
+        container.appendChild(div);
+        
+        if (line.isCommand) {
+          const parts = line.text.split('~$ ');
+          const promptHTML = `<span style="color:#4ade80">${parts[0]}~$ </span>`;
+          div.innerHTML = promptHTML;
+          const commandText = parts[1] || '';
+          let cIdx = 0;
+          function typeCommandChar() {
+            if (cIdx < commandText.length) {
+              div.innerHTML = promptHTML + `<span style="color:#e5e5e5; font-weight: 500;">${commandText.slice(0, cIdx + 1)}</span><span class="terminal-cursor" style="animation: blink-cursor 1s step-end infinite; color:#e5e5e5">_</span>`;
+              cIdx++;
+              timeouts.push(setTimeout(typeCommandChar, 15 + Math.random() * 30));
+            } else {
+              div.innerHTML = promptHTML + `<span style="color:#e5e5e5; font-weight: 500;">${commandText}</span>`;
+              finishLine();
+            }
+          }
+          typeCommandChar();
+        } else {
+          div.style.color = line.color || '#a3a3a3';
+          let cIdx = 0;
+          const outText = line.text;
+          function typeOutChar() {
+            if (cIdx < outText.length) {
+              const safeText = outText.slice(0, cIdx + 1).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+              div.innerHTML = safeText + '<span class="terminal-cursor" style="animation: blink-cursor 1s step-end infinite; color:#e5e5e5">_</span>';
+              cIdx++;
+              timeouts.push(setTimeout(typeOutChar, 5 + Math.random() * 15));
+            } else {
+              if (i === TERMINAL_LINES.length - 1) {
+                const finalSafeText = outText.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                div.innerHTML = finalSafeText + '<span class="terminal-cursor" style="animation: blink-cursor 1s step-end infinite; color:#e5e5e5">_</span>';
+              } else {
+                div.textContent = outText;
+              }
+              finishLine();
+            }
+          }
+          typeOutChar();
+        }
+      }
+
+      function finishLine() {
+        i++;
+        if (i < TERMINAL_LINES.length) {
+          const delay = TERMINAL_LINES[i - 1].isCommand ? 100 : 0;
+          const t = setTimeout(typeLine, delay);
+          timeouts.push(t);
+        }
       }
     }
 

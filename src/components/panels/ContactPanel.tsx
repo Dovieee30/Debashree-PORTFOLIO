@@ -33,7 +33,7 @@ export default function ContactPanel({ onClose }: PanelProps) {
   ];
 
   return (
-    <div className="panel panel-open" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+    <div className="panel panel-open" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '594px' }}>
       <div className="panel-traffic">
         <div className="traffic-dot traffic-red" onClick={onClose} />
         <div className="traffic-dot traffic-yellow" />
@@ -56,7 +56,6 @@ export default function ContactPanel({ onClose }: PanelProps) {
           />
         </div>
         
-        <div className="contact-note" style={{ textAlign: 'center', color: '#94a3b8', fontSize: '14px', marginBottom: '24px' }}>Response within 24 hours ✓</div>
       </div>
     </div>
   );

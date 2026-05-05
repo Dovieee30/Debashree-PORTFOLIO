@@ -1,5 +1,6 @@
 import type { PanelProps } from '../../types';
 import { motion } from 'motion/react';
+import { FaTrophy } from 'react-icons/fa';
 import TiltedCard from './TiltedCard';
 import profileAvatar from '../../assets/profileimage.avif';
 
@@ -23,12 +24,28 @@ const itemVariants = {
   }
 };
 
+let hasAnimatedName = false;
+
 const stats = [
   { num: '9.72', label: 'SGPA' },
-  { num: '3+', label: 'Hackathons' },
+  { num: '3+', label: 'Hackathons', sub: '1 WON' },
 ];
 
 export default function AboutPanel({ onClose }: PanelProps) {
+  const currentNameVariants = {
+    hidden: { opacity: 0, y: 15, color: hasAnimatedName ? '#ffffff' : '#64748b' },
+    show: { 
+      opacity: 1, 
+      y: 0, 
+      color: hasAnimatedName ? '#ffffff' : ['#64748b', '#ffffff'],
+      transition: { 
+        y: { type: "spring", stiffness: 300, damping: 24 },
+        opacity: { duration: 0.3 },
+        color: { duration: 1.2, ease: "easeOut", delay: 0.3 }
+      } 
+    }
+  };
+
   return (
     <div className="panel panel-open" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <div className="panel-traffic">
@@ -69,7 +86,11 @@ export default function AboutPanel({ onClose }: PanelProps) {
         {/* RHS: Details */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%' }}>
           <div className="about-header-text" style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: 0 }}>
-            <motion.h1 variants={itemVariants} style={{ margin: 0, color: '#fff', fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: '32px' }}>
+            <motion.h1 
+              variants={currentNameVariants} 
+              onAnimationComplete={() => { hasAnimatedName = true; }}
+              style={{ margin: 0, fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: '32px' }}
+            >
               DEBASHREE MAL
             </motion.h1>
             <motion.p variants={itemVariants} style={{ margin: 0, color: '#94a3b8', fontFamily: "'Inter', sans-serif", fontSize: '14px', fontWeight: 600 }}>
@@ -107,6 +128,11 @@ export default function AboutPanel({ onClose }: PanelProps) {
               >
                 <div className="stat-num" style={{ fontSize: '32px', fontWeight: 'bold', color: '#cbd5e1' }}>{stat.num}</div>
                 <div className="stat-label" style={{ fontSize: '14px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '4px' }}>{stat.label}</div>
+                {stat.sub && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#f8fafc', marginTop: '8px', fontWeight: 600, background: 'rgba(255, 255, 255, 0.1)', padding: '6px 14px', borderRadius: '16px' }}>
+                    <FaTrophy size={14} color="#94a3b8" /> {stat.sub}
+                  </div>
+                )}
               </motion.div>
             ))}
           </motion.div>
