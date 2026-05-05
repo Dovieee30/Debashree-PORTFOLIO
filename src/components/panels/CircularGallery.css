@@ -1,0 +1,38 @@
+.circular-gallery-scroller {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  position: relative;
+}
+
+.circular-gallery-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.circular-gallery-inner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-left: 10%; /* Ensure first item starts exactly centered */
+  gap: 4%; /* Space between items */
+}
+
+.circular-gallery-item {
+  flex: 0 0 80%; /* 80% of container width means 10% padding centers it */
+  height: 85%;
+  will-change: transform;
+  transform-origin: center bottom;
+  /* Prevent interaction bugs while moving */
+  position: relative;
+  z-index: 1;
+}
+
+/* Adjust project-card height when inside the gallery */
+.circular-gallery-item > .project-card {
+  height: 100% !important;
+  width: 100% !important;
+}

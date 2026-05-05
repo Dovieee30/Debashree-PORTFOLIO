@@ -7,12 +7,15 @@ export const Card = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEleme
 ));
 Card.displayName = 'Card';
 
-const makeSlot = (i: number, distX: number, distY: number, total: number) => ({
-  x: i * distX,
-  y: -i * distY,
-  z: -i * distX * 1.5,
-  zIndex: total - i
-});
+const makeSlot = (i: number, distX: number, distY: number, total: number) => {
+  const depth = Math.max(Math.abs(distX), Math.abs(distY));
+  return {
+    x: i * distX,
+    y: -i * distY,
+    z: -i * depth * 1.5,
+    zIndex: total - i
+  };
+};
 
 const placeNow = (el: HTMLElement | null, slot: any, skew: number) => {
   if (!el) return;

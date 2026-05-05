@@ -56,6 +56,8 @@ function RobotModel() {
   const { scene } = useGLTF('/robot.glb');
   const groupRef = useRef<THREE.Group>(null);
 
+  scene.traverse((obj) => { console.log(obj.name, obj.type); });
+
   // 2. True 3D Mouse Tracking sequence
   useFrame(() => {
     if (groupRef.current) {
