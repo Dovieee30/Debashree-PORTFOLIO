@@ -32,14 +32,14 @@ const stats = [
 ];
 
 export default function AboutPanel({ onClose }: PanelProps) {
-  const currentNameVariants = {
+  const currentNameVariants: any = {
     hidden: { opacity: 0, y: 15, color: hasAnimatedName ? '#ffffff' : '#64748b' },
     show: { 
       opacity: 1, 
       y: 0, 
       color: hasAnimatedName ? '#ffffff' : ['#64748b', '#ffffff'],
       transition: { 
-        y: { type: "spring", stiffness: 300, damping: 24 },
+        y: { type: "spring" as const, stiffness: 300, damping: 24 },
         opacity: { duration: 0.3 },
         color: { duration: 1.2, ease: "easeOut", delay: 0.3 }
       } 
