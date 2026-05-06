@@ -18,7 +18,7 @@ export default function ResumePanel({ onClose }: PanelProps) {
         <div className="resume-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', textAlign: 'center' }}>
           {/* @ts-ignore */}
           <lord-icon
-              src="https://cdn.lordicon.com/tbabdzcy.json"
+              src="/icons/tbabdzcy.json"
               trigger="in"
               delay="500"
               stroke="bold"
@@ -52,7 +52,7 @@ export default function ResumePanel({ onClose }: PanelProps) {
               fontWeight: 600,
               fontSize: '14px',
               marginTop: '16px',
-              transition: 'all 0.2s',
+              transition: 'background-color 0.2s, transform 0.2s',
               border: '1px solid #374151'
             }}
           >

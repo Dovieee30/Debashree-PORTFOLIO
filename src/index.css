@@ -114,12 +114,11 @@ body {
   font-family: 'Inter', -apple-system, sans-serif;
   font-size: 3.4rem;
   font-weight: 800;
-  color: white;
-  text-shadow: none;
   letter-spacing: 0.45em;
   min-height: 1.2em;
   white-space: nowrap;
-  transition: none !important;
+  text-shadow: none;
+  /* Font color will be driven by framer-motion in the component */
 }
 
 .hero-subtitle {
@@ -281,6 +280,27 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* Ensure glow stays inside */
+}
+
+/* ───────── GLOBAL LANDING PAGE GLOW ───────── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0; /* Render behind everything on the landing page */
+  background: radial-gradient(
+    300px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(200, 200, 200, 0.05), /* Soft classic silvery-white */
+    transparent 70%
+  );
+}
+
+/* Ensure content stays above the glow */
+.panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .panel.panel-open {
@@ -420,7 +440,7 @@ body {
   padding: 24px;
   background: rgba(255, 255, 255, 0.03);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .project-card:hover {
@@ -689,7 +709,7 @@ body {
   font-family: 'Inter', sans-serif;
   color: #94a3b8;
   text-decoration: none;
-  transition: all 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease;
   cursor: pointer;
 }
 
@@ -770,7 +790,6 @@ html.lenis body {
 
 /* ───────── PERFORMANCE OPTIMIZATIONS ───────── */
 .panel, 
-.dock-item, 
 .hero-name, 
 .ambient-orb, 
 .cursor-ring,
@@ -787,6 +806,6 @@ html.lenis body {
 }
 
 /* Specific transitions for elements that need them */
-a, button, .traffic-dot, .dock-item, .project-card {
+a, button, .traffic-dot, .project-card {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }

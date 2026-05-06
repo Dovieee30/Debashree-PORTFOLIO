@@ -7,10 +7,8 @@ export default function MenuBar({ visible }: { visible: boolean }) {
   useEffect(() => {
     const updateClock = () => {
       const n = new Date();
-      let h = n.getHours();
-      const ampm = h >= 12 ? 'PM' : 'AM';
-      h = h % 12 || 12;
-      setTime(`${String(h).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')} ${ampm}`);
+      const h = n.getHours();
+      setTime(`${String(h).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')}`);
     };
     updateClock();
     const t = setInterval(updateClock, 1000);

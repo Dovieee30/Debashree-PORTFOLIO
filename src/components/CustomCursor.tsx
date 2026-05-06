@@ -23,6 +23,10 @@ export default function CustomCursor() {
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${mousePos.current.x}px, ${mousePos.current.y}px, 0) translate(-50%, -50%)`;
       }
+      // Update global mouse coordinates for landing page magnetic glow
+      document.documentElement.style.setProperty('--mouse-x', `${mousePos.current.x}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${mousePos.current.y}px`);
+
       raf = requestAnimationFrame(animate);
     };
     animate();

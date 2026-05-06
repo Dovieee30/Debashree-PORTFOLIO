@@ -69,7 +69,7 @@ function DockItem({ children, className = '', onClick, mouseX, spring, distance,
       x: 0,
       width: baseItemSize
     };
-    return val - rect.x - baseItemSize / 2;
+    return val - (rect.x + rect.width / 2);
   });
 
   const targetSize = useTransform(mouseDistance, [-distance, 0, distance], [baseItemSize, magnification, baseItemSize]);
@@ -204,11 +204,11 @@ interface Item {
 }
 
 const ITEMS: Item[] = [
-  { id: 'about', icon: <DockLordIcon src="https://cdn.lordicon.com/lhjjdftm.json" trigger="loop" delay="100" stroke="bold" state="in-reveal" />, label: 'About' },
-  { id: 'projects', icon: <DockLordIcon src="https://cdn.lordicon.com/tsrgicte.json" trigger="loop" delay="200" stroke="bold" />, label: 'Projects' },
-  { id: 'skills', icon: <DockLordIcon src="https://cdn.lordicon.com/nfuackpv.json" trigger="loop" delay="300" stroke="bold" state="loop-spin" />, label: 'Skills' },
-  { id: 'terminal', icon: <DockLordIcon src="https://cdn.lordicon.com/ailnzwyn.json" trigger="loop" delay="400" stroke="bold" state="in-reveal" />, label: 'Terminal' },
-  { id: 'contact', icon: <DockLordIcon src="https://cdn.lordicon.com/vpbspaec.json" trigger="loop" delay="500" stroke="bold" state="in-unfold" />, label: 'Contact' },
+  { id: 'about', icon: <DockLordIcon src="/icons/lhjjdftm.json" trigger="loop" delay="100" stroke="bold" state="in-reveal" />, label: 'About' },
+  { id: 'projects', icon: <DockLordIcon src="/icons/tsrgicte.json" trigger="loop" delay="200" stroke="bold" />, label: 'Projects' },
+  { id: 'skills', icon: <DockLordIcon src="/icons/nfuackpv.json" trigger="loop" delay="300" stroke="bold" state="loop-spin" />, label: 'Skills' },
+  { id: 'terminal', icon: <DockLordIcon src="/icons/ailnzwyn.json" trigger="loop" delay="400" stroke="bold" state="in-reveal" />, label: 'Terminal' },
+  { id: 'contact', icon: <DockLordIcon src="/icons/vpbspaec.json" trigger="loop" delay="500" stroke="bold" state="in-unfold" />, label: 'Contact' },
 ];
 
 export default function Dock({
@@ -242,7 +242,7 @@ export default function Dock({
       <motion.div
         onMouseMove={(e: React.MouseEvent) => {
           isHovered.set(1);
-          mouseX.set(e.pageX);
+          mouseX.set(e.clientX);
         }}
         onMouseLeave={() => {
           isHovered.set(0);

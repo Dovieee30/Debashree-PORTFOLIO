@@ -9,8 +9,8 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap" as="style" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  
   
   <!-- Lord Icon Animated Icons -->
   <script src="https://cdn.lordicon.com/lordicon.js"></script>
@@ -21,6 +21,16 @@
   <link rel="preload" href="https://cdn.lordicon.com/ailnzwyn.json" as="fetch" crossorigin />
   <link rel="preload" href="https://cdn.lordicon.com/hmpomorl.json" as="fetch" crossorigin />
   <link rel="preload" href="https://cdn.lordicon.com/vpbspaec.json" as="fetch" crossorigin />
+  
+  <style>
+    /* Critical CSS to prevent white flash and layout shift during load */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #050505 !important;
+      color: #ffffff;
+    }
+  </style>
 </head>
 
 <body>

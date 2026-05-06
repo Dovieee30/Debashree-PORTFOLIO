@@ -1,7 +1,8 @@
-import { useEffect, useRef, Suspense } from 'react';
+import { useEffect, useRef, Suspense, memo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Environment, OrbitControls, Html, useProgress } from '@react-three/drei';
 import * as THREE from 'three';
+import { motion } from 'framer-motion';
 import RotatingText from './RotatingText';
 
 // Canvas Loading Fallback Component
@@ -94,7 +95,7 @@ function RobotModel() {
 useGLTF.preload('/robot.glb');
 
 // 3. Hero Section Parent Component
-export default function Robot({ onReady }: { onReady: () => void }) {
+const Robot = memo(function Robot({ onReady }: { onReady: () => void }) {
   // Fire the portfolio boot sequence immediately — no typing delay
   useEffect(() => {
     const t = setTimeout(() => onReady(), 300);
@@ -129,9 +130,22 @@ export default function Robot({ onReady }: { onReady: () => void }) {
             paddingLeft: '8vw' 
           }}
         >
-          {/* Line 1: Name — appears instantly, no typing animation */}
-          <h1 className="hero-name">
-            DEBASHREE MAL
+          {/* Line 1: Name — appears instantly in grey, then shimmers to white character by character */}
+          <h1 className="hero-name" style={{ display: 'flex' }}>
+            {"DEBASHREE MAL".split('').map((char, index) => (
+              <motion.span
+                key={index}
+                initial={{ color: '#64748b' }}
+                animate={{ color: '#ffffff' }}
+                transition={{ 
+                  duration: 0.08, 
+                  delay: index * 0.05, // Much faster shimmer!
+                  ease: "linear"
+                }}
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
           </h1>
 
           {/* Line 2: Taglines — smaller, loops fast with quick delete */}
@@ -181,7 +195,7 @@ export default function Robot({ onReady }: { onReady: () => void }) {
         >
           {/* React Three Fiber Canvas engine replaces Sketchfab completely */}
           {/* By floating the physical 3D camera upwards to Y=2.5, we perfectly frame the upper chest natively */}
-          <Canvas camera={{ position: [0, 2.5, 4.5], fov: 45 }}>
+          <Canvas camera={{ position: [0, 2.5, 4.5], fov: 45 }} gl={{ alpha: true }} style={{ background: 'transparent' }}>
             {/* Professional studio lighting setup */}
             <ambientLight intensity={0.6} />
             <spotLight position={[10, 10, 10]} intensity={1.5} angle={0.15} penumbra={1} />
@@ -197,7 +211,7 @@ export default function Robot({ onReady }: { onReady: () => void }) {
               maxPolarAngle={Math.PI / 1.5}
             />
 
-            <Suspense fallback={<CanvasLoader />}>
+            <Suspense fallback={null}>
               <RobotModel />
             </Suspense>
           </Canvas>
@@ -205,4 +219,6 @@ export default function Robot({ onReady }: { onReady: () => void }) {
       </div>
     </>
   );
-}
+});
+
+export default Robot;

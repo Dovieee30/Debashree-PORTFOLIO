@@ -5,7 +5,7 @@ export default function ContactPanel({ onClose }: PanelProps) {
   const items = [
     {
       // @ts-ignore
-      icon: <lord-icon src="https://cdn.lordicon.com/gtvaxhwv.json" trigger="hover" stroke="bold" colors="primary:#ffffff,secondary:#00c8ff,tertiary:#7c3aed,quaternary:#e2e8f0" style={{width: '150px', height: '150px'}}></lord-icon>,
+      icon: <lord-icon src="/icons/gtvaxhwv.json" trigger="hover" stroke="bold" colors="primary:#ffffff,secondary:#00c8ff,tertiary:#7c3aed,quaternary:#e2e8f0" style={{width: '150px', height: '150px'}}></lord-icon>,
       title: "Email",
       handle: "debashreee87@gmail.com",
       borderColor: "#00c8ff",
@@ -14,7 +14,7 @@ export default function ContactPanel({ onClose }: PanelProps) {
     },
     {
       // @ts-ignore
-      icon: <lord-icon src="https://cdn.lordicon.com/xerxcacw.json" trigger="hover" stroke="bold" state="morph-alone" colors="primary:#ffffff,secondary:#00c8ff" style={{width: '150px', height: '150px'}}></lord-icon>,
+      icon: <lord-icon src="/icons/xerxcacw.json" trigger="hover" stroke="bold" state="morph-alone" colors="primary:#ffffff,secondary:#00c8ff" style={{width: '150px', height: '150px'}}></lord-icon>,
       title: "LinkedIn",
       handle: "linkedin.com/in/debashree-mal",
       borderColor: "#7c3aed",
@@ -23,7 +23,7 @@ export default function ContactPanel({ onClose }: PanelProps) {
     },
     {
       // @ts-ignore
-      icon: <lord-icon src="https://cdn.lordicon.com/lllcnxva.json" trigger="hover" stroke="bold" colors="primary:#ffffff,secondary:#00c8ff,tertiary:#7c3aed" style={{width: '150px', height: '150px'}}></lord-icon>,
+      icon: <lord-icon src="/icons/lllcnxva.json" trigger="hover" stroke="bold" colors="primary:#ffffff,secondary:#00c8ff,tertiary:#7c3aed" style={{width: '150px', height: '150px'}}></lord-icon>,
       title: "GitHub",
       handle: "github.com/Dovieee30",
       borderColor: "#e2e8f0",

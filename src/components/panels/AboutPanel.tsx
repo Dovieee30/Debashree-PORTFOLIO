@@ -100,7 +100,7 @@ export default function AboutPanel({ onClose }: PanelProps) {
 
 
           <motion.p variants={itemVariants} className="about-bio" style={{ fontSize: '18px', lineHeight: '1.6', color: '#e2e8f0' }}>
-            Turning India's overlooked gaps into AI-powered products — driven by software, design, and the obsession to build what's missing.
+            Transforming India's unaddressed challenges into purposeful, AI-powered products — through engineering, design, and a relentless drive to build what's missing.
           </motion.p>
 
           <motion.div variants={itemVariants} className="about-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginTop: '16px' }}>
@@ -129,8 +129,8 @@ export default function AboutPanel({ onClose }: PanelProps) {
                 <div className="stat-num" style={{ fontSize: '32px', fontWeight: 'bold', color: '#cbd5e1' }}>{stat.num}</div>
                 <div className="stat-label" style={{ fontSize: '14px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '4px' }}>{stat.label}</div>
                 {stat.sub && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#f8fafc', marginTop: '8px', fontWeight: 600, background: 'rgba(255, 255, 255, 0.1)', padding: '6px 14px', borderRadius: '16px' }}>
-                    <FaTrophy size={14} color="#94a3b8" /> {stat.sub}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '15px', color: '#f8fafc', marginTop: '8px', fontWeight: 600, background: 'rgba(255, 255, 255, 0.1)', padding: '6px 14px', borderRadius: '16px' }}>
+                    <FaTrophy size={15} color="#FFD700" /> {stat.sub}
                   </div>
                 )}
               </motion.div>
