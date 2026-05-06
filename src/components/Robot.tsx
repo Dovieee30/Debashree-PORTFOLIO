@@ -1,38 +1,11 @@
 import { useEffect, useRef, Suspense, memo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, Environment, OrbitControls, Html, useProgress } from '@react-three/drei';
+import { useGLTF, Environment, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
 import RotatingText from './RotatingText';
 
-// Canvas Loading Fallback Component
-function CanvasLoader() {
-  const { progress } = useProgress();
-  return (
-    <Html center>
-      <div style={{ color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-        <div style={{ 
-          width: '32px', 
-          height: '32px', 
-          border: '2px solid rgba(255,255,255,0.1)', 
-          borderTopColor: '#fff', 
-          borderRadius: '50%', 
-          animation: 'spin 1s linear infinite' 
-        }}></div>
-        <span style={{ fontSize: '12px', letterSpacing: '2px', fontWeight: 600, fontFamily: "'Inter', sans-serif" }}>
-          {progress.toFixed(0)}%
-        </span>
-      </div>
-      <style>
-        {`
-          @keyframes spin {
-            to { transform: rotate(360deg); }
-          }
-        `}
-      </style>
-    </Html>
-  );
-}
+
 
 // Global variable strictly for buttery 60fps tracking without causing React to stutter
 const cursorState = { x: 0, y: 0, isHoveringCanvas: false };
