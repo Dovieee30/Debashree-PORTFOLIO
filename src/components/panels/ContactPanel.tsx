@@ -33,7 +33,7 @@ export default function ContactPanel({ onClose }: PanelProps) {
   ];
 
   return (
-    <div className="panel panel-open" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '594px' }}>
+    <div className="panel panel-open" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
       <div className="panel-traffic">
         <div className="traffic-dot traffic-red" onClick={onClose} />
         <div className="traffic-dot traffic-yellow" />

@@ -3,7 +3,7 @@ import Lenis from 'lenis';
 import MenuBar from './components/MenuBar';
 import Robot from './components/Robot';
 import Dock from './components/Dock';
-import CustomCursor from './components/CustomCursor';
+
 import AboutPanel from './components/panels/AboutPanel';
 import ProjectsPanel from './components/panels/ProjectsPanel';
 import SkillsPanel from './components/panels/SkillsPanel';
@@ -55,6 +55,16 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
+  // Cursor glow tracking (sets CSS variables for body::before glow)
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    };
+    window.addEventListener('mousemove', onMove);
+    return () => window.removeEventListener('mousemove', onMove);
+  }, []);
+
   const handleRobotReady = useCallback(() => {
     setSequenceComplete(true);
   }, []);
@@ -65,7 +75,7 @@ export default function App() {
       <div className="ambient-orb ambient-orb-1" />
       <div className="ambient-orb ambient-orb-2" />
 
-      <CustomCursor />
+
       <MenuBar visible={sequenceComplete} />
       <Robot onReady={handleRobotReady} />
 

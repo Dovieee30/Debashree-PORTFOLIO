@@ -108,7 +108,7 @@ const Robot = memo(function Robot({ onReady }: { onReady: () => void }) {
             {"DEBASHREE MAL".split('').map((char, index) => (
               <motion.span
                 key={index}
-                initial={{ color: '#64748b' }}
+                initial={{ color: '#2a2a2a' }}
                 animate={{ color: '#ffffff' }}
                 transition={{ 
                   duration: 0.08, 
