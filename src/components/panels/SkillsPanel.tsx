@@ -3,17 +3,36 @@ import { useEffect, useRef } from 'react';
 import type { PanelProps, Skill } from '../../types';
 import LogoLoop from './LogoLoop';
 import { SiReact, SiNodedotjs, SiPostgresql, SiFirebase, SiFigma, SiCplusplus, SiTypescript, SiJavascript, SiPython, SiGit, SiDocker, SiVercel, SiSupabase, SiAndroid, SiTailwindcss, SiVite } from 'react-icons/si';
+import { PROJECTS } from './ProjectsPanel';
 
-const SKILLS: Skill[] = [
-  { name: 'React.exe',          cpu: 88, color: '#61dafb' },
-  { name: 'Node.js.exe',        cpu: 82, color: '#84cc16' },
-  { name: 'Groq_AI.exe',        cpu: 85, color: '#a855f7' },
-  { name: 'PostgreSQL.exe',     cpu: 75, color: '#3b82f6' },
-  { name: 'Android_Studio.exe', cpu: 70, color: '#34d399' },
-  { name: 'Firebase.exe',       cpu: 65, color: '#f59e0b' },
-  { name: 'C++.exe',            cpu: 60, color: '#fb7185' },
-  { name: 'Figma.exe',          cpu: 55, color: '#e879f9' },
-];
+const TechInfo: Record<string, { cpu: number, color: string }> = {
+  'React':      { cpu: 88, color: '#61dafb' },
+  'Next.js':    { cpu: 85, color: '#38bdf8' },
+  'Node.js':    { cpu: 82, color: '#84cc16' },
+  'Supabase':   { cpu: 80, color: '#3ecf8e' },
+  'Groq':       { cpu: 85, color: '#a855f7' },
+  'GroqAI':     { cpu: 85, color: '#a855f7' },
+  'Firebase':   { cpu: 65, color: '#f59e0b' },
+  'Vercel':     { cpu: 70, color: '#ffffff' },
+  'Vite':       { cpu: 75, color: '#646cff' },
+  'Twilio':     { cpu: 60, color: '#f22f46' },
+  'Leaflet':    { cpu: 55, color: '#b5de7f' },
+  'Hindsight':  { cpu: 65, color: '#fb7185' },
+};
+
+// Dynamically generate skills from the project tech stacks
+const uniqueTechs = Array.from(
+  new Set(PROJECTS.flatMap((p) => p.stack))
+);
+
+const SKILLS: Skill[] = uniqueTechs.map((tech) => {
+  const info = TechInfo[tech] || { cpu: 60, color: '#94a3b8' };
+  return {
+    name: tech.replace(/\s+/g, '_') + '.exe',
+    cpu: info.cpu,
+    color: info.color
+  };
+});
 
 const techLogos = [
   { node: <SiReact color="#61dafb" />, title: 'React' },
@@ -85,7 +104,6 @@ export default function SkillsPanel({ onClose }: PanelProps) {
             <tr>
               <th>Process</th>
               <th>Usage Bar</th>
-              <th>%</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -95,16 +113,15 @@ export default function SkillsPanel({ onClose }: PanelProps) {
                 <td>{s.name}</td>
                 <td>
                   <div className="skill-bar-track">
-                    <div className="skill-bar-fill" />
+                    <div className="skill-bar-fill" style={{ backgroundColor: s.color }} />
                   </div>
                 </td>
-                <td>{s.cpu}%</td>
                 <td><span className="skill-status">● Running</span></td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className="skills-footer">8 processes running · System: Optimal</div>
+        <div className="skills-footer">{SKILLS.length} processes running · System: Optimal</div>
 
         {/* Tech Logo Loop */}
         <div style={{ 
