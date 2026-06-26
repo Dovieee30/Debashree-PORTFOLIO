@@ -498,7 +498,8 @@ body::before {
   text-align: left;
 }
 
-.skills-table thead th:nth-child(3) {
+.skills-table thead th:nth-child(3),
+.skills-table thead th:nth-child(4) {
   text-align: center;
 }
 
@@ -522,6 +523,13 @@ body::before {
 }
 
 .skills-table tbody td:nth-child(3) {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #22c55e;
+}
+
+.skills-table tbody td:nth-child(4) {
   text-align: center;
 }
 

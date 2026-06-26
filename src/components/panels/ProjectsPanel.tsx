@@ -27,7 +27,7 @@ const getLogo = (name: string) => {
   return <img src={url} alt={name} style={{ width: 24, height: 24, objectFit: 'contain', filter: needInvert ? 'invert(1)' : 'none' }} />;
 };
 
-export const PROJECTS: Project[] = [
+const PROJECTS: Project[] = [
   {
     name: 'PLUTO',
     icon: '',
