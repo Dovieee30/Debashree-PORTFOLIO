@@ -108,7 +108,7 @@ export default function SkillsOrbit() {
     }
 
     function drawCenter() {
-      const R = 0.09 * Math.min(W, H);
+      const R = 0.12 * Math.min(W, H);
 
       // Pulse rings
       for (let i = 3; i > 0; i--) {
@@ -116,7 +116,7 @@ export default function SkillsOrbit() {
         const alpha = 0.06 / i;
         ctx.beginPath();
         ctx.arc(cx, cy, pulse, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(168,85,247,${alpha})`;
+        ctx.strokeStyle = `rgba(226,232,240,${alpha * 1.5})`;
         ctx.lineWidth = 1 * dpr;
         ctx.stroke();
       }
@@ -128,7 +128,7 @@ export default function SkillsOrbit() {
         const a2 = ((i + 0.6) / segments) * Math.PI * 2 + t * 0.004;
         ctx.beginPath();
         ctx.arc(cx, cy, R * 0.92, a1, a2);
-        ctx.strokeStyle = `rgba(168,85,247,${0.5 + 0.3 * Math.sin(t * 0.02 + i)})`;
+        ctx.strokeStyle = `rgba(226,232,240,${0.4 + 0.25 * Math.sin(t * 0.02 + i)})`;
         ctx.lineWidth = 2.5 * dpr;
         ctx.stroke();
       }
@@ -140,47 +140,30 @@ export default function SkillsOrbit() {
         const a2 = ((i + 0.4) / segments2) * Math.PI * 2 - t * 0.007;
         ctx.beginPath();
         ctx.arc(cx, cy, R * 0.72, a1, a2);
-        ctx.strokeStyle = `rgba(192,132,252,${0.4 + 0.3 * Math.sin(t * 0.015 + i * 1.3)})`;
+        ctx.strokeStyle = `rgba(148,163,184,${0.45 + 0.25 * Math.sin(t * 0.015 + i * 1.3)})`;
         ctx.lineWidth = 1.5 * dpr;
         ctx.stroke();
       }
 
       // Inner disc
       ctx.beginPath();
-      ctx.arc(cx, cy, R * 0.52, 0, Math.PI * 2);
-      const gr = ctx.createRadialGradient(cx, cy - R * 0.1, 0, cx, cy, R * 0.52);
-      gr.addColorStop(0, "#2d1060");
-      gr.addColorStop(0.5, "#1a0840");
-      gr.addColorStop(1, "#0d0520");
+      ctx.arc(cx, cy, R * 0.66, 0, Math.PI * 2);
+      const gr = ctx.createRadialGradient(cx, cy - R * 0.1, 0, cx, cy, R * 0.66);
+      gr.addColorStop(0, "#1e293b");
+      gr.addColorStop(0.6, "#0f172a");
+      gr.addColorStop(1, "#020617");
       ctx.fillStyle = gr;
       ctx.fill();
-      ctx.strokeStyle = "rgba(168,85,247,0.6)";
-      ctx.lineWidth = 1 * dpr;
-      ctx.stroke();
-
-      // Spinning hexagon
-      const hexR = R * 0.3;
-      ctx.beginPath();
-      for (let i = 0; i < 6; i++) {
-        const a = (i / 6) * Math.PI * 2 - Math.PI / 6 + t * 0.008;
-        i === 0
-          ? ctx.moveTo(cx + hexR * Math.cos(a), cy + hexR * Math.sin(a))
-          : ctx.lineTo(cx + hexR * Math.cos(a), cy + hexR * Math.sin(a));
-      }
-      ctx.closePath();
-      ctx.strokeStyle = "rgba(192,132,252,0.5)";
-      ctx.lineWidth = 1 * dpr;
+      ctx.strokeStyle = "rgba(30, 41, 59, 0.8)";
+      ctx.lineWidth = 1.2 * dpr;
       ctx.stroke();
 
       // Text
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.font = `600 ${13 * dpr}px 'JetBrains Mono', monospace`;
-      ctx.fillStyle = "#e2e8f0";
-      ctx.fillText("DEB", cx, cy - 7 * dpr);
-      ctx.font = `300 ${8 * dpr}px 'JetBrains Mono', monospace`;
-      ctx.fillStyle = "rgba(192,132,252,0.9)";
-      ctx.fillText("ENGINEER", cx, cy + 8 * dpr);
+      ctx.font = `600 ${16.5 * dpr}px 'JetBrains Mono', monospace`;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillText("SKILLS", cx, cy);
     }
 
     function drawNode(skill: Skill, pos: { x: number; y: number }, ri: number) {
