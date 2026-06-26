@@ -346,10 +346,10 @@ export default function SkillsOrbit() {
           top: "18px",
           left: "22px",
           fontFamily: "'JetBrains Mono', monospace",
-          fontSize: "9px",
+          fontSize: "13px",
           letterSpacing: "0.2em",
-          color: "#a855f7",
-          opacity: 0.55,
+          color: "#ffffff",
+          opacity: 0.9,
           zIndex: 2,
         }}
       >
