@@ -14,6 +14,8 @@ interface Particle {
   speed: number;
   color: string;
   size: number;
+  phase: number;
+  twinkleSpeed: number;
 }
 
 const skills: Skill[] = [
@@ -32,9 +34,9 @@ const skills: Skill[] = [
 ];
 
 const rings = [
-  { frac: 0.195, speed: 0.00045 },
-  { frac: 0.315, speed: -0.00032 },
-  { frac: 0.425, speed: 0.00026 },
+  { frac: 0.24, speed: 0.00045 },
+  { frac: 0.34, speed: -0.00032 },
+  { frac: 0.44, speed: 0.00026 },
 ];
 
 export default function SkillsOrbit() {
@@ -65,13 +67,37 @@ export default function SkillsOrbit() {
     });
 
     // Particles
-    const particles: Particle[] = Array.from({ length: 55 }, () => ({
-      ri: Math.floor(Math.random() * 3),
-      angle: Math.random() * Math.PI * 2,
-      speed: (Math.random() * 0.00035 + 0.0001) * (Math.random() < 0.5 ? 1 : -1),
-      color: ["#a855f7", "#7c3aed", "#c084fc", "#e879f9"][Math.floor(Math.random() * 4)],
-      size: Math.random() * 1.2 + 0.4,
-    }));
+    // Particles (65 stars for rich, organic density)
+    const particles: Particle[] = Array.from({ length: 65 }, () => {
+      const ri = Math.floor(Math.random() * 3);
+      const angle = Math.random() * Math.PI * 2;
+      const speed = (Math.random() * 0.0003 + 0.0001) * (Math.random() < 0.5 ? 1 : -1);
+
+      // Assign sizes and colors based on depth layer (ri) to create a beautiful 3D parallax!
+      let size = 0.2;
+      let colorType = 0; // 0: white, 1: purple, 2: cyan
+
+      if (ri === 2) {
+        size = Math.random() * 0.2 + 0.15; // Far background (0.15px - 0.35px)
+        colorType = Math.random() < 0.65 ? 1 : 0; // Purple-indigo to merge into the dark space
+      } else if (ri === 1) {
+        size = Math.random() * 0.3 + 0.3; // Mid ground (0.3px - 0.6px)
+        colorType = Math.random() < 0.5 ? 2 : 0; // Soft cyan or warm white
+      } else {
+        size = Math.random() * 0.4 + 0.5; // Foreground (0.5px - 0.9px)
+        colorType = 0; // Bright white stars
+      }
+
+      return {
+        ri,
+        angle,
+        speed,
+        color: String(colorType),
+        size,
+        phase: Math.random() * Math.PI * 2,
+        twinkleSpeed: Math.random() * 0.01 + 0.005,
+      };
+    });
 
     function resize() {
       const r = wrap!.getBoundingClientRect();
@@ -91,15 +117,21 @@ export default function SkillsOrbit() {
 
     function skillPos(ri: number, si: number, total: number, time: number) {
       const base = ((2 * Math.PI) / total) * si;
-      const angle = base + rings[ri].speed * time;
-      const r = rings[ri].frac * Math.min(W, H);
-      return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+      // Phase offsets per ring to create a beautiful, symmetrical starting geometry that is not a '+'
+      const ringOffsets = [0, Math.PI / 6, Math.PI / 3]; // 0, 30, and 60 degrees
+      const angle = base + ringOffsets[ri] + rings[ri].speed * time;
+      const baseSize = Math.min(W, H);
+      const rx = rings[ri].frac * baseSize * 1.65;
+      const ry = rings[ri].frac * baseSize * 0.85;
+      return { x: cx + rx * Math.cos(angle), y: cy + ry * Math.sin(angle) };
     }
 
     function drawRing(frac: number, alpha: number) {
-      const r = frac * Math.min(W, H);
+      const baseSize = Math.min(W, H);
+      const rx = frac * baseSize * 1.65;
+      const ry = frac * baseSize * 0.85;
       ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
       ctx.strokeStyle = `rgba(168,85,247,${alpha})`;
       ctx.lineWidth = 0.6 * dpr;
       ctx.setLineDash([3 * dpr, 10 * dpr]);
@@ -109,17 +141,6 @@ export default function SkillsOrbit() {
 
     function drawCenter() {
       const R = 0.12 * Math.min(W, H);
-
-      // Pulse rings
-      for (let i = 3; i > 0; i--) {
-        const pulse = R * (1 + i * 0.45 + 0.15 * Math.sin(t * 0.025 + i));
-        const alpha = 0.06 / i;
-        ctx.beginPath();
-        ctx.arc(cx, cy, pulse, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(226,232,240,${alpha * 1.5})`;
-        ctx.lineWidth = 1 * dpr;
-        ctx.stroke();
-      }
 
       // Outer segmented arc (clockwise)
       const segments = 8;
@@ -174,11 +195,11 @@ export default function SkillsOrbit() {
       ctx.save();
       ctx.translate(pos.x, pos.y);
 
-      // Glow
-      const glow = ri === 0 ? 0.22 : ri === 1 ? 0.18 : 0.14;
-      const pulse = glow + 0.1 * Math.sin(t * 0.025 + skills.indexOf(skill) * 0.8);
+      // Glow (slightly smaller, tighter border shadow)
+      const glow = ri === 0 ? 0.18 : ri === 1 ? 0.14 : 0.11;
+      const pulse = glow + 0.07 * Math.sin(t * 0.025 + skills.indexOf(skill) * 0.8);
       ctx.beginPath();
-      ctx.arc(0, 0, r * 1.8, 0, Math.PI * 2);
+      ctx.arc(0, 0, r * 1.35, 0, Math.PI * 2); // Reduced glow radius from 1.8 to 1.35
       ctx.fillStyle = skill.color + Math.round(pulse * 255).toString(16).padStart(2, "0");
       ctx.fill();
 
@@ -213,14 +234,14 @@ export default function SkillsOrbit() {
         }
       }
 
-      // Logo
+      // Logo (slightly larger for better visibility)
       const img = imgs[skill.name];
-      const s = r * 0.9;
+      const s = r * 1.25; // Increased logo size from 0.9 to 1.25
       if (img && img.complete && img.naturalWidth > 0) {
         ctx.drawImage(img, -s / 2, -s / 2, s, s);
       } else {
         ctx.fillStyle = skill.color;
-        ctx.font = `600 ${7 * dpr}px JetBrains Mono, monospace`;
+        ctx.font = `600 ${9 * dpr}px JetBrains Mono, monospace`; // Enlarged fallback text size
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText(skill.name.slice(0, 3).toUpperCase(), 0, 0);
@@ -237,13 +258,39 @@ export default function SkillsOrbit() {
       // Particles
       particles.forEach((p) => {
         p.angle += p.speed;
-        const r = rings[p.ri].frac * Math.min(W, H);
-        const px = cx + r * Math.cos(p.angle);
-        const py = cy + r * Math.sin(p.angle);
+        const baseSize = Math.min(W, H);
+        const rx = rings[p.ri].frac * baseSize * 1.65;
+        const ry = rings[p.ri].frac * baseSize * 0.85;
+        const px = cx + rx * Math.cos(p.angle);
+        const py = cy + ry * Math.sin(p.angle);
+
+        // Determine brightness based on depth layer (ri)
+        const maxAlpha = p.ri === 2 ? 0.25 : p.ri === 1 ? 0.45 : 0.65;
+        const minAlpha = p.ri === 2 ? 0.03 : p.ri === 1 ? 0.06 : 0.1;
+        const alpha = minAlpha + (maxAlpha - minAlpha) * Math.abs(Math.sin(t * p.twinkleSpeed + p.phase));
+
+        // Determine color styling based on colorType
+        let fillStyle = `rgba(226, 232, 240, ${alpha})`; // Slate white
+        if (p.color === "1") {
+          fillStyle = `rgba(168, 85, 247, ${alpha * 0.85})`; // Soft purple/indigo starlight to merge with space
+        } else if (p.color === "2") {
+          fillStyle = `rgba(56, 189, 248, ${alpha * 0.85})`; // Soft cyan starlight
+        }
+
         ctx.beginPath();
         ctx.arc(px, py, p.size * dpr, 0, Math.PI * 2);
-        ctx.fillStyle = p.color + "66";
+        ctx.fillStyle = fillStyle;
         ctx.fill();
+
+        // Faint outer glow halo for the slightly larger stars
+        if (p.size > 0.65) {
+          ctx.beginPath();
+          ctx.arc(px, py, p.size * 2.5 * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = p.color === "2"
+            ? `rgba(56, 189, 248, ${alpha * 0.15})`
+            : `rgba(226, 232, 240, ${alpha * 0.15})`;
+          ctx.fill();
+        }
       });
 
       // Collect all positions + draw connector lines
@@ -354,8 +401,10 @@ export default function SkillsOrbit() {
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: "11px",
           color: "#e2e8f0",
-          background: "rgba(168,85,247,0.12)",
-          border: "1px solid rgba(168,85,247,0.25)",
+          background: "rgba(24, 24, 27, 0.85)",
+          border: "1px solid rgba(255, 255, 255, 0.15)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
           borderRadius: "20px",
           padding: "5px 16px",
           pointerEvents: "none",
