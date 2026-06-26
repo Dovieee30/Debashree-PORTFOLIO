@@ -38,11 +38,11 @@ const PROJECTS: Project[] = [
     link: 'https://plutoooo.vercel.app',
     year: '2026',
     images: [
-      '/Pluto/Screenshot 2026-03-31 101421.png',
-      '/Pluto/Screenshot 2026-03-31 101642.png',
-      '/Pluto/Screenshot 2026-03-31 102516.png',
-      '/Pluto/Screenshot 2026-03-31 102649.png',
-      '/Pluto/Screenshot 2026-03-31 103024.png'
+      '/Pluto/screenshot-1.png',
+      '/Pluto/screenshot-2.png',
+      '/Pluto/screenshot-3.png',
+      '/Pluto/screenshot-4.png',
+      '/Pluto/screenshot-5.png'
     ]
   },
   {
@@ -55,9 +55,9 @@ const PROJECTS: Project[] = [
     link: 'https://zwiggy-app.vercel.app/',
     year: '2026',
     images: [
-      '/Zwiggy/Screenshot 2026-04-26 170514.png',
-      '/Zwiggy/Screenshot 2026-04-26 170610.png',
-      '/Zwiggy/Screenshot 2026-04-26 171559.png'
+      '/Zwiggy/screenshot-1.png',
+      '/Zwiggy/screenshot-2.png',
+      '/Zwiggy/screenshot-3.png'
     ]
   },
   {
@@ -70,9 +70,9 @@ const PROJECTS: Project[] = [
     link: 'https://flowmindprojectai.vercel.app',
     year: '2026',
     images: [
-      '/Flowmind/Screenshot 2026-04-26 171809.png',
-      '/Flowmind/Screenshot 2026-04-26 171930.png',
-      '/Flowmind/Screenshot 2026-04-26 174352.png'
+      '/Flowmind/screenshot-1.png',
+      '/Flowmind/screenshot-2.png',
+      '/Flowmind/screenshot-3.png'
     ]
   }
 ];
