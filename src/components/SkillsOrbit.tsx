@@ -332,13 +332,11 @@ export default function SkillsOrbit() {
     <div
       ref={wrapRef}
       style={{
-        background: "#07070e",
-        borderRadius: "16px",
+        background: "transparent",
         overflow: "hidden",
         position: "relative",
-        height: "580px",
+        height: "100%",
         width: "100%",
-        border: "1px solid #14102a",
         fontFamily: "'JetBrains Mono', monospace",
       }}
     >
