@@ -38,7 +38,7 @@ Portfolio OS reimagines the traditional developer portfolio as a **desktop opera
 
 <br/>
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 <div align="center">
 
