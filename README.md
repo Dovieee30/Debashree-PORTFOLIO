@@ -1,14 +1,8 @@
 <div align="center">
 
-# ✦ Debashree Mal — Portfolio OS
+# MY PORFOLIO 
 
 **A macOS-inspired, interactive developer portfolio built with React, Three.js & Framer Motion.**
-
-[![Live Demo](https://img.shields.io/badge/▶_LIVE_DEMO-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://debashree-portfolio.vercel.app)
-[![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
-[![Three.js](https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=threedotjs&logoColor=white)](https://threejs.org)
-[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev)
 
 <br/>
 
@@ -28,7 +22,7 @@ Portfolio OS reimagines the traditional developer portfolio as a **desktop opera
 
 <br/>
 
-## ⚡ Key Features
+## Key Features
 
 | Feature | Description |
 |---|---|
@@ -62,105 +56,6 @@ Portfolio OS reimagines the traditional developer portfolio as a **desktop opera
 </div>
 
 <br/>
-
-## 📂 Project Structure
-
-```
-├── public/
-│   ├── robot.glb              # 3D robot model
-│   ├── icons/                 # Lord Icon JSON files
-│   ├── Pluto/                 # Project screenshots
-│   ├── Zwiggy/
-│   └── Flowmind/
-├── src/
-│   ├── App.tsx                # Root — layout, panel state, Lenis init
-│   ├── main.tsx               # Entry point
-│   ├── index.css              # Global styles, design tokens, animations
-│   ├── types.ts               # Shared TypeScript types
-│   ├── components/
-│   │   ├── Robot.tsx           # Three.js 3D robot with intro sequence
-│   │   ├── Dock.tsx            # macOS-style animated dock bar
-│   │   ├── MenuBar.tsx         # Top menu bar
-│   │   ├── CustomCursor.tsx    # Custom cursor component
-│   │   ├── SkillsOrbit.tsx     # Canvas orbital skill visualization
-│   │   ├── RotatingText.tsx    # Rotating text animation
-│   │   └── TextType.tsx        # Typewriter text effect
-│   └── components/panels/
-│       ├── AboutPanel.tsx      # Profile card with tilted avatar
-│       ├── ProjectsPanel.tsx   # Circular gallery + card swap showcase
-│       ├── SkillsPanel.tsx     # Skills orbit wrapper
-│       ├── TerminalPanel.tsx   # Hacker-style terminal with neofetch
-│       ├── ResumePanel.tsx     # Resume / CV viewer
-│       └── ContactPanel.tsx    # ChromaGrid contact cards
-├── index.html                 # HTML shell with preloaded assets
-├── vite.config.ts
-├── tsconfig.json
-└── package.json
-```
-
-<br/>
-
-## 🚀 Featured Projects
-
-### PLUTO — Student Growth Ecosystem
-> **Live · Production** &nbsp;|&nbsp; React · Next.js · Node.js · Supabase · Groq · Firebase  
-> More than event discovery — a complete student growth ecosystem with campus opportunities, auto-built portfolios, and cross-college collaboration.
-
-### ZWIGGY — Disguised Safety App
-> **App** &nbsp;|&nbsp; React · Vite · Twilio · Leaflet  
-> Looks like a food app. Works like a safety net. AI detects distress and auto-alerts trusted contacts via a hidden 3-tap + PIN trigger.
-
-### FLOWMIND — AI Project Manager
-> **Hackathon** &nbsp;|&nbsp; React · Hindsight · Groq AI · Supabase  
-> An AI project manager that learns your team and predicts failures before they happen.
-
-<br/>
-
-## 🏁 Getting Started
-
-### Prerequisites
-
-- **Node.js** ≥ 18
-- **npm** ≥ 9
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/Dovieee30/Debashree-PORTFOLIO.git
-cd Debashree-PORTFOLIO
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-The app will be available at `http://localhost:5173`.
-
-### Build for Production
-
-```bash
-npm run build
-npm run preview
-```
-
-<br/>
-
-## 📬 Get in Touch
-
-<div align="center">
-
-[![Email](https://img.shields.io/badge/Email-debashreee87@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:debashreee87@gmail.com)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Debashree_Mal-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/debashree-mal-4a6214370)
-[![GitHub](https://img.shields.io/badge/GitHub-Dovieee30-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Dovieee30)
-
-</div>
-
-<br/>
-
----
 
 <div align="center">
 
