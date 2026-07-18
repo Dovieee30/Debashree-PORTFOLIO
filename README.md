@@ -6,8 +6,7 @@
 
 <br/>
 
-> *Not just a portfolio — an operating system experience.*
-> 
+> *Not just a portfolio — an operating system experience.* 
 > Every section is a window. Every interaction is intentional. Explore it the way you'd explore a desktop.
 
 <br/>
@@ -16,7 +15,7 @@
 
 ---
 
-## 🖥️ Concept
+##  Concept
 
 Portfolio OS reimagines the traditional developer portfolio as a **desktop operating system**. Instead of scrolling through a static page, visitors interact with a fully animated macOS-style interface — complete with a **dock**, **draggable panels**, a **custom cursor**, **ambient lighting**, and a **3D robot mascot** rendered in real-time.
 
@@ -58,12 +57,6 @@ Portfolio OS reimagines the traditional developer portfolio as a **desktop opera
 <br/>
 
 <div align="center">
-
-**Computer Engineering · 2nd Year · SGPA 9.72**
-
-Built with ☕ and a relentless drive to create what's missing.
-
-<sub>© 2026 Debashree Mal. All rights reserved.</sub>
 
 </div>
 
