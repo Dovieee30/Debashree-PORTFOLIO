@@ -170,19 +170,19 @@ export default function SkillsOrbit() {
       ctx.beginPath();
       ctx.arc(cx, cy, R * 0.66, 0, Math.PI * 2);
       const gr = ctx.createRadialGradient(cx, cy - R * 0.1, 0, cx, cy, R * 0.66);
-      gr.addColorStop(0, "#1e293b");
-      gr.addColorStop(0.6, "#0f172a");
-      gr.addColorStop(1, "#020617");
+      gr.addColorStop(0, "#333333");
+      gr.addColorStop(0.6, "#1a1a1a");
+      gr.addColorStop(1, "#0d0d0d");
       ctx.fillStyle = gr;
       ctx.fill();
-      ctx.strokeStyle = "rgba(30, 41, 59, 0.8)";
+      ctx.strokeStyle = "rgba(51, 51, 51, 0.8)";
       ctx.lineWidth = 1.2 * dpr;
       ctx.stroke();
 
       // Text
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.font = `600 ${16.5 * dpr}px 'JetBrains Mono', monospace`;
+      ctx.font = `600 ${16.5 * dpr}px 'Syne', sans-serif`;
       ctx.fillStyle = "#ffffff";
       ctx.fillText("SKILLS", cx, cy);
     }
@@ -212,13 +212,7 @@ export default function SkillsOrbit() {
       ctx.lineWidth = 1 * dpr;
       ctx.stroke();
 
-      // Proficiency arc
-      const arc = (skill.pct / 100) * Math.PI * 2;
-      ctx.beginPath();
-      ctx.arc(0, 0, r, -Math.PI / 2, -Math.PI / 2 + arc);
-      ctx.strokeStyle = skill.color;
-      ctx.lineWidth = 2.5 * dpr;
-      ctx.stroke();
+
 
       // Hover tick burst
       if (isHov) {
@@ -241,7 +235,7 @@ export default function SkillsOrbit() {
         ctx.drawImage(img, -s / 2, -s / 2, s, s);
       } else {
         ctx.fillStyle = skill.color;
-        ctx.font = `600 ${9 * dpr}px JetBrains Mono, monospace`; // Enlarged fallback text size
+        ctx.font = `600 ${9 * dpr}px 'Syne', sans-serif`; // Enlarged fallback text size
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText(skill.name.slice(0, 3).toUpperCase(), 0, 0);
@@ -329,7 +323,7 @@ export default function SkillsOrbit() {
         hoveredSkill = found;
         if (lbl) {
           lbl.style.opacity = found ? "1" : "0";
-          if (found) lbl.textContent = (found as Skill).name + " · " + (found as Skill).pct + "%";
+          if (found) lbl.textContent = (found as Skill).name;
         }
       }
 
@@ -367,7 +361,7 @@ export default function SkillsOrbit() {
         position: "relative",
         height: "100%",
         width: "100%",
-        fontFamily: "'JetBrains Mono', monospace",
+        fontFamily: "'Syne', sans-serif",
       }}
     >
       <div
@@ -375,15 +369,15 @@ export default function SkillsOrbit() {
           position: "absolute",
           top: "18px",
           left: "22px",
-          fontFamily: "'JetBrains Mono', monospace",
-          fontSize: "13px",
+          fontFamily: "'Syne', sans-serif",
+          fontSize: "17px",
           letterSpacing: "0.2em",
           color: "#ffffff",
           opacity: 0.9,
           zIndex: 2,
         }}
       >
-        MY SKILLS · ACTIVE PROCESSES
+        MY SKILLS
       </div>
 
       <canvas
@@ -398,7 +392,7 @@ export default function SkillsOrbit() {
           bottom: "20px",
           left: "50%",
           transform: "translateX(-50%)",
-          fontFamily: "'JetBrains Mono', monospace",
+          fontFamily: "'Syne', sans-serif",
           fontSize: "11px",
           color: "#e2e8f0",
           background: "rgba(24, 24, 27, 0.85)",

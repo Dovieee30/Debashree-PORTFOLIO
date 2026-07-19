@@ -54,7 +54,7 @@ export default function AboutPanel({ onClose }: PanelProps) {
         <div className="traffic-dot traffic-green" />
       </div>
 
-      <h2 style={{ fontFamily: "'Inter', sans-serif", fontSize: '22px', fontWeight: 700, color: '#ffffff', letterSpacing: 'normal', padding: '16px 24px 0 24px', margin: 0 }}>
+      <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '17px', fontWeight: 600, color: '#ffffff', letterSpacing: '0.2em', padding: '16px 24px 0 24px', margin: 0, opacity: 0.9 }}>
         PROFILE
       </h2>
 
