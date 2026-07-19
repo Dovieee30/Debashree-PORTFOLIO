@@ -10,7 +10,7 @@ export default function ContactPanel({ onClose }: PanelProps) {
       handle: "debashreee87@gmail.com",
       borderColor: "#00c8ff",
       gradient: "linear-gradient(145deg, rgba(0, 200, 255, 0.05), #000)",
-      url: "mailto:debashreee87@gmail.com"
+      url: "https://mail.google.com/mail/?view=cm&fs=1&to=debashreee87@gmail.com"
     },
     {
       // @ts-ignore

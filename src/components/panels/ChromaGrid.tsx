@@ -83,14 +83,9 @@ export const ChromaGrid: React.FC<ChromaGridProps> = ({
     });
   };
 
-  const handleCardClick = (url?: string) => {
-    if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
-  };
-
   const handleCardMove = (e: React.MouseEvent<HTMLElement>) => {
-    const card = e.currentTarget;
+    const card = e.currentTarget.closest('.chroma-card') as HTMLElement;
+    if (!card) return;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -110,27 +105,42 @@ export const ChromaGrid: React.FC<ChromaGridProps> = ({
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
     >
-      {data.map((c, i) => (
-        <article
-          key={i}
-          className="chroma-card"
-          onMouseMove={handleCardMove}
-          onClick={() => handleCardClick(c.url)}
-          style={{
-            '--card-border': c.borderColor || 'transparent',
-            '--card-gradient': c.gradient,
-            cursor: c.url ? 'pointer' : 'default'
-          } as React.CSSProperties}
-        >
-          <div className="chroma-img-wrapper">
-            {c.icon ? c.icon : (c.image && <img src={c.image} alt={c.title} loading="lazy" />)}
-          </div>
-          <footer className="chroma-info">
-            <h3 className="name">{c.title}</h3>
-            {c.handle && <span className="handle">{c.handle}</span>}
-          </footer>
-        </article>
-      ))}
+      {data.map((c, i) => {
+        const cardContent = (
+          <article
+            key={i}
+            className="chroma-card"
+            onMouseMove={handleCardMove}
+            style={{
+              '--card-border': c.borderColor || 'transparent',
+              '--card-gradient': c.gradient,
+              cursor: c.url ? 'pointer' : 'default'
+            } as React.CSSProperties}
+          >
+            <div className="chroma-img-wrapper">
+              {c.icon ? c.icon : (c.image && <img src={c.image} alt={c.title} loading="lazy" />)}
+            </div>
+            <footer className="chroma-info">
+              <h3 className="name">{c.title}</h3>
+              {c.handle && <span className="handle">{c.handle}</span>}
+            </footer>
+          </article>
+        );
+
+        return c.url ? (
+          <a
+            key={i}
+            href={c.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            {cardContent}
+          </a>
+        ) : (
+          cardContent
+        );
+      })}
       <div className="chroma-overlay" />
       <div ref={fadeRef} className="chroma-fade" />
     </div>
