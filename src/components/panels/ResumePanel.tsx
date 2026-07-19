@@ -53,7 +53,7 @@ export default function ResumePanel({ onClose }: PanelProps) {
               fontSize: '14px',
               marginTop: '16px',
               transition: 'background-color 0.2s, transform 0.2s',
-              border: '1px solid #374151'
+              border: 'none'
             }}
           >
             ⬇ Download Resume

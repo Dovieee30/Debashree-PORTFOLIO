@@ -402,7 +402,7 @@ export default function SkillsOrbit() {
           fontSize: "11px",
           color: "#e2e8f0",
           background: "rgba(24, 24, 27, 0.85)",
-          border: "1px solid rgba(255, 255, 255, 0.15)",
+          border: "none",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
           borderRadius: "20px",

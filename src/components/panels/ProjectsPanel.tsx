@@ -113,7 +113,7 @@ export default function ProjectsPanel({ onClose }: PanelProps) {
               <div
                 className="project-card"
                 style={{
-                  border: '1px solid rgba(255,255,255,0.05)',
+                  border: 'none',
                   background: hovered === i ? 'rgba(42, 42, 42, 0.9)' : 'rgba(30, 30, 30, 0.8)',
                   backdropFilter: 'blur(12px)',
                   borderRadius: '24px',
@@ -162,7 +162,7 @@ export default function ProjectsPanel({ onClose }: PanelProps) {
                       style={{ 
                         color: '#ffffff', 
                         background: 'rgba(255, 255, 255, 0.1)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        border: 'none',
                         transition: 'background 0.2s ease, opacity 0.2s ease',
                         alignSelf: 'flex-start',
                         padding: '6px 14px',

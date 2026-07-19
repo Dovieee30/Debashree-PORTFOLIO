@@ -110,14 +110,13 @@ export default function AboutPanel({ onClose }: PanelProps) {
                 className="about-stat"
                 whileHover={{ 
                   scale: 1.04, 
-                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                  borderColor: 'rgba(255, 255, 255, 0.15)'
+                  backgroundColor: 'rgba(255, 255, 255, 0.08)'
                 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 style={{
                   padding: '20px',
                   background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.05)',
+                  border: 'none',
                   borderRadius: '16px',
                   display: 'flex',
                   flexDirection: 'column',
