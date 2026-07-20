@@ -44,8 +44,8 @@ export default function ContactPanel({ onClose }: PanelProps) {
         LET'S WORK TOGETHER
       </h2>
 
-      <div className="panel-body" style={{ overflow: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '24px' }}>
-        <div style={{ flex: 1, width: '100%', maxWidth: '850px', margin: '0 auto', position: 'relative', display: 'flex', alignItems: 'center', marginTop: '24px' }}>
+      <div className="panel-body" style={{ overflow: 'auto', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ width: '100%', maxWidth: '850px', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <ChromaGrid 
             items={items}
             radius={250}
@@ -55,7 +55,6 @@ export default function ContactPanel({ onClose }: PanelProps) {
             columns={3}
           />
         </div>
-        
       </div>
     </div>
   );
