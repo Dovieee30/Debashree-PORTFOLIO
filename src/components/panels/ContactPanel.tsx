@@ -41,7 +41,7 @@ export default function ContactPanel({ onClose }: PanelProps) {
       </div>
 
       <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '17px', fontWeight: 600, color: '#ffffff', letterSpacing: '0.2em', padding: '16px 24px 0 24px', margin: 0, opacity: 0.9 }}>
-        CONTACT ME
+        LET'S WORK TOGETHER
       </h2>
 
       <div className="panel-body" style={{ overflow: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '24px' }}>

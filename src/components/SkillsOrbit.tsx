@@ -377,7 +377,7 @@ export default function SkillsOrbit() {
           zIndex: 2,
         }}
       >
-        MY SKILLS
+        MY SKILLS MATRIX
       </div>
 
       <canvas

@@ -100,7 +100,7 @@ export default function ProjectsPanel({ onClose }: PanelProps) {
         <div className="traffic-dot traffic-yellow" />
         <div className="traffic-dot traffic-green" />
       </div>
-      <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '17px', fontWeight: 600, color: '#ffffff', letterSpacing: '0.2em', padding: '16px 24px 0 24px', margin: 0, opacity: 0.9 }}>MY PROJECTS</h2>
+      <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: '17px', fontWeight: 600, color: '#ffffff', letterSpacing: '0.2em', padding: '16px 24px 0 24px', margin: 0, opacity: 0.9 }}>PROJECTS I'VE BUILT</h2>
       <div style={{ flex: 1, overflow: 'hidden', height: 'calc(100% - 80px)', position: 'relative' }}>
         <CircularGallery
           bend={3}
