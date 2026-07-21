@@ -71,9 +71,7 @@ export default function App() {
 
   return (
     <>
-      {/* Ambient glow orbs */}
-      <div className="ambient-orb ambient-orb-1" />
-      <div className="ambient-orb ambient-orb-2" />
+      {/* Ambient glow orbs removed for pure black background */}
 
 
       <MenuBar visible={sequenceComplete} />

@@ -202,30 +202,6 @@ body {
   flex-shrink: 0;
 }
 
-/* ───────── AMBIENT GLOW ORBS ───────── */
-.ambient-orb {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.ambient-orb-1 {
-  width: 500px;
-  height: 500px;
-  top: -100px;
-  left: -100px;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.09) 0%, transparent 70%);
-}
-
-.ambient-orb-2 {
-  width: 400px;
-  height: 400px;
-  bottom: -80px;
-  right: -80px;
-  background: radial-gradient(circle, rgba(0, 200, 255, 0.07) 0%, transparent 70%);
-}
-
 /* ───────── BACKDROP (click-outside overlay) ───────── */
 .backdrop {
   position: fixed;
