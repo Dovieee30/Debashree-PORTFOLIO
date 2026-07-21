@@ -110,27 +110,24 @@ export default function ProjectsPanel({ onClose }: PanelProps) {
         >
           {PROJECTS.map((p, i) => (
             <CircularGalleryItem key={p.name}>
-              <div
-                className="project-card"
-                style={{
-                  border: 'none',
-                  background: hovered === i ? 'rgba(42, 42, 42, 0.9)' : 'rgba(30, 30, 30, 0.8)',
-                  backdropFilter: 'blur(12px)',
-                  borderRadius: '24px',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  color: '#ffffff',
-                  position: 'relative',
-                  zIndex: 1,
-                  boxShadow: hovered === i ? '0 20px 50px rgba(0,0,0,0.6)' : '0 10px 30px rgba(0,0,0,0.4)',
-                  transition: 'background 0.4s ease, box-shadow 0.4s ease',
-                  overflow: 'hidden'
-                }}
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)}
-              >
+                <div
+                  className="project-card"
+                  style={{
+                    border: 'none',
+                    background: 'rgba(16, 16, 16, 0.9)',
+                    backdropFilter: 'blur(12px)',
+                    borderRadius: '24px',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    color: '#ffffff',
+                    position: 'relative',
+                    zIndex: 1,
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
+                    overflow: 'hidden'
+                  }}
+                >
                 <div style={{ flex: 3.5, paddingLeft: '1.5rem', paddingRight: '1.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <div className="project-card-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span className="project-card-title" style={{ color: '#ffffff', fontSize: '20px' }}>{p.name}</span>
