@@ -247,7 +247,7 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background: radial-gradient(
-    300px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    200px at var(--mouse-x, 50%) var(--mouse-y, 50%),
     rgba(200, 200, 200, 0.05),
     transparent 70%
   );
