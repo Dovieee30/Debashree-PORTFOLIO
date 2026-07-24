@@ -16,9 +16,7 @@ const TERMINAL_LINES: TerminalLine[] = [
   { text: '  Shell:    React/TypeScript', color: '#9ca3af' },
   { text: '  DE:       macOS-Inspired', color: '#9ca3af' },
   { text: '', color: 'transparent' },
-  { text: 'debashree@portfolio:~$ ls ~/projects/', color: '#e5e5e5', isCommand: true },
-  { text: '  PLUTO/  FlowMind/  Zwiggy/', color: '#60a5fa' },
-  { text: '', color: 'transparent' },
+
   { text: 'debashree@portfolio:~$ cat ~/.achievements', color: '#e5e5e5', isCommand: true },
   { text: '  → SGPA: 9.72', color: '#d4d4d4' },
   { text: '  → 1 Hackathon Won - AXION', color: '#d4d4d4' },
@@ -28,13 +26,10 @@ const TERMINAL_LINES: TerminalLine[] = [
   { text: '  → Avishkar 2026', color: '#d4d4d4' },
   { text: '', color: 'transparent' },
   { text: 'debashree@portfolio:~$ echo $TECH_STACK', color: '#e5e5e5', isCommand: true },
-  { text: '  React · TypeScript · JavaScript · HTML · CSS · Tailwind · Vite · Node.js · Python · FastAPI · C++ · MongoDB · Supabase', color: '#d4d4d4' },
-  { text: '', color: 'transparent' },
-  { text: 'debashree@portfolio:~$ ./status.sh', color: '#e5e5e5', isCommand: true },
-  { text: '  [✓] Open to SDE Internships', color: '#4ade80' },
-  { text: '  [✓] Building AI for underserved Indian markets', color: '#d4d4d4' },
-  { text: '  [✓] Available now', color: '#d4d4d4' },
-  { text: '', color: 'transparent' },
+  { text: '  Frontend: React, TypeScript, JavaScript, HTML, CSS, Tailwind, Vite', color: '#4ade80' },
+  { text: '  Backend:  NodeJS, Python, FastAPI, C++', color: '#ec4899' },
+  { text: '  Database: MongoDB, Supabase', color: '#f97316' },
+
   { text: 'debashree@portfolio:~$ _', color: '#e5e5e5', cursor: true }
 ];
 
@@ -62,7 +57,7 @@ export default function TerminalPanel({ onClose }: PanelProps) {
       requestAnimationFrame(() => { div.classList.add('typed'); });
 
       if (line.cursor) {
-        div.innerHTML = `<span style="color:#4ade80">debashree@portfolio:~$ </span><span class="terminal-cursor" style="animation: blink-cursor 1s step-end infinite; color:#e5e5e5">_</span>`;
+        div.innerHTML = `<span style="color:#a855f7">debashree@portfolio:~$ </span><span class="terminal-cursor" style="animation: blink-cursor 1s step-end infinite; color:#e5e5e5">_</span>`;
         container.appendChild(div);
         finishLine();
       } else if (line.text === '') {
@@ -74,7 +69,7 @@ export default function TerminalPanel({ onClose }: PanelProps) {
         
         if (line.isCommand) {
           const parts = line.text.split('~$ ');
-          const promptHTML = `<span style="color:#4ade80">${parts[0]}~$ </span>`;
+          const promptHTML = `<span style="color:#a855f7">${parts[0]}~$ </span>`;
           div.innerHTML = promptHTML;
           const commandText = parts[1] || '';
           let cIdx = 0;
