@@ -19,26 +19,26 @@ interface Particle {
 }
 
 const skills: Skill[] = [
-  // Ring 0
-  { name: "React",      pct: 90, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",          color: "#61dafb", ring: 0 },
-  { name: "TypeScript", pct: 85, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",color: "#3178c6", ring: 0 },
-  { name: "JavaScript", pct: 90, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",color: "#f7df1e", ring: 0 },
-  { name: "NodeJS",     pct: 85, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",        color: "#68a063", ring: 0 },
-  { name: "MongoDB",    pct: 80, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",      color: "#47a248", ring: 0 },
-  
-  // Ring 1
-  { name: "HTML",       pct: 95, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",          color: "#e34f26", ring: 1 },
-  { name: "CSS",        pct: 95, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",            color: "#1572b6", ring: 1 },
-  { name: "Python",     pct: 85, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",        color: "#3776ab", ring: 1 },
-  { name: "Supabase",   pct: 80, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg",    color: "#3ecf8e", ring: 1 },
-  { name: "Tailwind",   pct: 90, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", color: "#38bdf8", ring: 1 },
-
-  // Ring 2
+  // Ring 2: Frontend (Outer)
+  { name: "React",      pct: 90, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",          color: "#61dafb", ring: 2 },
+  { name: "TypeScript", pct: 85, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",color: "#3178c6", ring: 2 },
+  { name: "JavaScript", pct: 90, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",color: "#f7df1e", ring: 2 },
+  { name: "HTML",       pct: 95, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",          color: "#e34f26", ring: 2 },
+  { name: "CSS",        pct: 95, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",            color: "#1572b6", ring: 2 },
+  { name: "Tailwind",   pct: 90, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", color: "#38bdf8", ring: 2 },
   { name: "Vite",       pct: 85, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vite/vite-original.svg",            color: "#646cff", ring: 2 },
-  { name: "FastAPI",    pct: 75, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",      color: "#009688", ring: 2 },
-  { name: "C++",        pct: 70, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",  color: "#9c6af7", ring: 2 },
-  { name: "Git",        pct: 85, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",              color: "#f05032", ring: 2 },
-  { name: "Figma",      pct: 80, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",          color: "#f24e1e", ring: 2 },
+
+  // Ring 1: Backend (Middle)
+  { name: "NodeJS",     pct: 85, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",        color: "#68a063", ring: 1 },
+  { name: "Python",     pct: 85, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",        color: "#3776ab", ring: 1 },
+  { name: "FastAPI",    pct: 75, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",      color: "#009688", ring: 1 },
+  { name: "C++",        pct: 70, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",  color: "#9c6af7", ring: 1 },
+
+  // Ring 0: Databases & Tools (Inner)
+  { name: "MongoDB",    pct: 80, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",      color: "#47a248", ring: 0 },
+  { name: "Supabase",   pct: 80, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg",    color: "#3ecf8e", ring: 0 },
+  { name: "Git",        pct: 85, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",              color: "#f05032", ring: 0 },
+  { name: "Figma",      pct: 80, src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",          color: "#f24e1e", ring: 0 },
 ];
 
 const rings = [
