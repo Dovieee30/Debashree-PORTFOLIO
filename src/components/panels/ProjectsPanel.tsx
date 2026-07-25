@@ -70,9 +70,10 @@ const PROJECTS: Project[] = [
     link: 'https://flowmindprojectai.vercel.app',
     year: '2026',
     images: [
-      '/Flowmind/screenshot-1.png',
-      '/Flowmind/screenshot-2.png',
-      '/Flowmind/screenshot-3.png'
+      '/Flowmind/flowmind1.png',
+      '/Flowmind/flowmind2.jpeg',
+      '/Flowmind/flowmind3.jpeg',
+      '/Flowmind/flowmind4.jpeg'
     ]
   }
 ];
