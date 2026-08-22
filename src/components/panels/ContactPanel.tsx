@@ -5,7 +5,7 @@ export default function ContactPanel({ onClose }: PanelProps) {
   const items = [
     {
       // @ts-ignore
-      icon: <lord-icon src="/icons/gtvaxhwv.json" trigger="hover" stroke="bold" colors="primary:#ffffff,secondary:#00c8ff,tertiary:#7c3aed,quaternary:#e2e8f0" style={{width: '120px', height: '120px'}}></lord-icon>,
+      icon: <lord-icon src="/icons/gtvaxhwv.json" trigger="hover" stroke="bold" colors="primary:#ffffff,secondary:#00c8ff,tertiary:#7c3aed,quaternary:#e2e8f0" style={{ width: '120px', height: '120px' }}></lord-icon>,
       title: "Email",
 
       borderColor: "#00c8ff",
@@ -14,7 +14,7 @@ export default function ContactPanel({ onClose }: PanelProps) {
     },
     {
       // @ts-ignore
-      icon: <lord-icon src="/icons/xerxcacw.json" trigger="hover" stroke="bold" state="morph-alone" colors="primary:#ffffff,secondary:#00c8ff" style={{width: '120px', height: '120px'}}></lord-icon>,
+      icon: <lord-icon src="/icons/xerxcacw.json" trigger="hover" stroke="bold" state="morph-alone" colors="primary:#ffffff,secondary:#00c8ff" style={{ width: '120px', height: '120px' }}></lord-icon>,
       title: "LinkedIn",
 
       borderColor: "#7c3aed",
@@ -23,7 +23,7 @@ export default function ContactPanel({ onClose }: PanelProps) {
     },
     {
       // @ts-ignore
-      icon: <lord-icon src="/icons/lllcnxva.json" trigger="hover" stroke="bold" colors="primary:#ffffff,secondary:#00c8ff,tertiary:#7c3aed" style={{width: '120px', height: '120px'}}></lord-icon>,
+      icon: <lord-icon src="/icons/lllcnxva.json" trigger="hover" stroke="bold" colors="primary:#ffffff,secondary:#00c8ff,tertiary:#7c3aed" style={{ width: '120px', height: '120px' }}></lord-icon>,
       title: "GitHub",
 
       borderColor: "#e2e8f0",
@@ -46,7 +46,7 @@ export default function ContactPanel({ onClose }: PanelProps) {
 
       <div className="panel-body" style={{ overflow: 'auto', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <div style={{ width: '100%', maxWidth: '850px', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <ChromaGrid 
+          <ChromaGrid
             items={items}
             radius={250}
             damping={0.6}

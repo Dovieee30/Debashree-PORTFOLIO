@@ -67,7 +67,7 @@ const PROJECTS: Project[] = [
     color: '#00c8ff',
     desc: 'FlowMind is an AI project manager that learns your team and predicts failures before they happen.',
     stack: ['React', 'Hindsight', 'GroqAI', 'Supabase'],
-    link: 'https://flowmindprojectai.vercel.app',
+    link: 'https://flowwithmind.vercel.app',
     year: '2026',
     images: [
       '/Flowmind/flowmind1.png',
