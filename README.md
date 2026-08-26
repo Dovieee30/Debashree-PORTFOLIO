@@ -1,6 +1,6 @@
 <div align="center">
 
-# MY PORFOLIO 
+#  DEBASHREE'S PORFOLIO
 
 **A macOS-inspired, interactive developer portfolio built with React, Three.js & Framer Motion.**
 
